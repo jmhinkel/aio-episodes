@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adventures in Odyssey — Episodes 1–500</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0e0c;--bg2:#181714;--bg3:#201e1a;--bg4:#2a2721;
+  --border:rgba(255,220,120,0.07);--border2:rgba(255,220,120,0.15);
+  --text:#f5f0e8;--text2:#a89e8a;--text3:#5c5649;
+  --gold:#d4a843;--gold2:#f0c96a;--gold-bg:rgba(212,168,67,0.1);--gold-glow:rgba(212,168,67,0.2);
+  --blue:#7ab8d4;--blue-bg:rgba(122,184,212,0.08);
+  --green:#3ecf8e;--green-bg:rgba(62,207,142,0.08);
+  --red:#c0887a;--red-bg:rgba(192,136,122,0.08);
+  --font-display:'Playfair Display',Georgia,serif;
+  --font-body:'Source Sans 3',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:100;background:rgba(15,14,12,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.header-inner{max-width:820px;margin:0 auto;padding:0 1.5rem;height:54px;display:flex;align-items:center;gap:1rem}
+.logo{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--gold2);text-decoration:none}
+.logo span{color:var(--text2);font-weight:400;font-size:13px;margin-left:6px;font-family:var(--font-body)}
+.header-links{margin-left:auto;display:flex;gap:4px}
+.hlink{font-size:12.5px;color:var(--text2);text-decoration:none;padding:4px 9px;border-radius:6px;transition:all .15s}
+.hlink:hover{color:var(--text);background:var(--bg3)}
+
+/* HERO */
+.hero{max-width:820px;margin:0 auto;padding:2.5rem 1.5rem 1.75rem}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(212,168,67,0.3);background:var(--gold-bg);padding:4px 11px;border-radius:100px;margin-bottom:1rem}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px rgba(62,207,142,0.5)}
+h1{font-family:var(--font-display);font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-.02em;line-height:1.15;color:var(--text);margin-bottom:.5rem}
+h1 em{font-style:italic;color:var(--gold2)}
+.hero-sub{font-size:14px;color:var(--text2);font-weight:300;line-height:1.6;margin-bottom:1.5rem;max-width:540px}
+.hero-sub a{color:var(--gold);text-decoration:none}
+.hero-sub a:hover{text-decoration:underline}
+.hero-stats{display:flex;gap:1.75rem;align-items:center;flex-wrap:wrap}
+.hstat{display:flex;flex-direction:column;gap:1px}
+.hstat-n{font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:-.02em}
+.hstat-l{font-size:11px;color:var(--text3);letter-spacing:.04em;text-transform:uppercase}
+.hstat-div{width:1px;height:24px;background:var(--border2)}
+
+/* CONTROLS */
+.controls{max-width:820px;margin:0 auto;padding:0 1.5rem 1.25rem;display:flex;flex-direction:column;gap:10px}
+.controls-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:200px;max-width:320px}
+.search-ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:13px;pointer-events:none}
+.search-in{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--font-body);font-size:13.5px;padding:9px 12px 9px 33px;outline:none;transition:border-color .15s,box-shadow .15s}
+.search-in::placeholder{color:var(--text3)}
+.search-in:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+.search-count{font-size:12px;color:var(--text3);margin-top:2px;padding-left:2px}
+.search-count strong{color:var(--text2)}
+.mode-label{font-size:12px;color:var(--text3);font-weight:500;letter-spacing:.03em;text-transform:uppercase;flex-shrink:0}
+.mode-toggle{display:flex;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:3px;gap:2px;flex-shrink:0}
+.mode-btn{padding:5px 14px;border-radius:6px;border:none;background:transparent;color:var(--text3);font-family:var(--font-body);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap}
+.mode-btn.active{background:var(--gold-bg);color:var(--gold2);border:1px solid rgba(212,168,67,0.25)}
+.mode-btn:hover:not(.active){color:var(--text2)}
+
+/* JUMP BAR */
+.jump-bar{max-width:820px;margin:0 auto;padding:0 1.5rem 1.5rem;display:flex;flex-wrap:wrap;gap:5px}
+.jump-btn{font-size:12px;font-weight:600;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;transition:all .15s;font-family:var(--font-body)}
+.jump-btn:hover{border-color:var(--border2);color:var(--text2)}
+
+/* MAIN */
+.main{max-width:820px;margin:0 auto;padding:0 1.5rem 5rem}
+
+/* YEAR SECTIONS */
+.year-block{margin-bottom:2.25rem}
+.section-head{display:flex;align-items:baseline;gap:.75rem;padding-bottom:.6rem;margin-bottom:.75rem;border-bottom:1px solid var(--border);position:relative}
+.section-head::before{content:'';position:absolute;bottom:-1px;left:0;width:40px;height:1px;background:var(--gold)}
+.section-year{font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:-.01em}
+.section-tag{font-size:12px;color:var(--text3);font-style:italic;font-weight:300;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.section-count{font-size:11.5px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);padding:2px 9px;border-radius:100px;font-weight:500;flex-shrink:0;margin-left:auto}
+
+/* ALBUM BLOCKS */
+.album-block{margin-bottom:5px}
+.album-header{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;user-select:none}
+.album-block.open .album-header{border-radius:10px 10px 0 0;border-bottom-color:transparent;background:var(--bg3)}
+.album-header:hover{background:var(--bg3);border-color:var(--border2)}
+.album-art{width:52px;height:52px;border-radius:6px;object-fit:cover;flex-shrink:0;background:var(--bg4);border:1px solid var(--border)}
+.album-art-placeholder{width:52px;height:52px;border-radius:6px;flex-shrink:0;background:linear-gradient(135deg,var(--bg3),var(--bg4));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--text3)}
+.album-info{flex:1;min-width:0}
+.album-num-badge{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:.06em;text-transform:uppercase}
+.album-title-text{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--text);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.album-meta{font-size:11.5px;color:var(--text3);margin-top:1px}
+.album-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.album-ep-count{font-size:11.5px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:100px;font-weight:500}
+.album-chevron{font-size:10px;color:var(--text3);transition:transform .2s}
+.album-block.open .album-chevron{transform:rotate(180deg)}
+.album-eps{display:none;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden}
+.album-block.open .album-eps{display:block}
+
+/* EP CARDS */
+.ep-list{display:flex;flex-direction:column;gap:2px;padding:4px}
+.ep-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .15s}
+.ep-card:hover{border-color:var(--border2)}
+.ep-card.playing{border-color:rgba(212,168,67,0.45);background:var(--bg3)}
+.ep-card.no-audio{opacity:.6}
+.ep-card.hidden{display:none}
+.ep-top{display:flex;align-items:center;gap:0;padding:8px 11px;cursor:pointer;user-select:none}
+.ep-play-btn{width:28px;height:28px;border-radius:50%;flex-shrink:0;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;transition:all .15s;margin-right:10px}
+.ep-card:hover .ep-play-btn{background:var(--gold-bg);border-color:rgba(212,168,67,0.4)}
+.ep-card.playing .ep-play-btn{background:var(--gold);border-color:var(--gold)}
+.play-tri{width:0;height:0;border-style:solid;border-width:4.5px 0 4.5px 8px;border-color:transparent transparent transparent var(--text3);margin-left:2px;transition:border-color .15s}
+.ep-card:hover .play-tri{border-color:transparent transparent transparent var(--gold2)}
+.ep-card.playing .play-tri{display:none}
+.pause-icon{display:none;gap:2px;align-items:center}
+.pause-bar{width:2.5px;height:10px;background:#000;border-radius:2px}
+.ep-card.playing .pause-icon{display:flex}
+.dash-icon{font-size:12px;color:var(--text3)}
+.ep-info{flex:1;min-width:0}
+.ep-row1{display:flex;align-items:baseline;gap:6px}
+.ep-num{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.04em;flex-shrink:0;font-variant-numeric:tabular-nums}
+.ep-num.milestone{color:var(--green)}
+.ep-title{font-size:13.5px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .15s}
+.ep-card:hover .ep-title{color:var(--gold2)}
+.ep-theme{font-size:11px;color:var(--text3);font-weight:300;font-style:italic;margin-top:1px}
+.ep-right{display:flex;align-items:center;gap:5px;margin-left:10px;flex-shrink:0}
+.ep-badge{font-size:10px;font-weight:500;padding:2px 7px;border-radius:100px;border:1px solid;white-space:nowrap}
+.badge-alt{color:var(--blue);border-color:rgba(122,184,212,0.25);background:var(--blue-bg)}
+.badge-milestone{color:var(--green);border-color:rgba(62,207,142,0.3);background:var(--green-bg)}
+.ep-chevron{font-size:10px;color:var(--text3);transition:transform .2s;flex-shrink:0}
+.ep-card.open .ep-chevron{transform:rotate(180deg)}
+.ep-player{display:none;padding:0 11px 11px 49px}
+.ep-card.open .ep-player{display:block}
+.audio-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:8px 11px;display:flex;flex-direction:column;gap:4px}
+.audio-src-label{font-size:10px;color:var(--text3);letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+audio{width:100%;height:28px;outline:none}
+.fallback-link{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--gold);text-decoration:none;margin-top:3px;opacity:.7;transition:opacity .15s}
+.fallback-link:hover{opacity:1;text-decoration:underline}
+.no-audio-msg{font-size:12px;color:var(--text3);padding:4px 0;font-style:italic}
+.warn-note{font-size:11px;color:var(--red);margin-bottom:6px;display:none}
+
+/* BACK TOP */
+.back-top{position:fixed;bottom:22px;right:22px;z-index:100;width:38px;height:38px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;opacity:0;pointer-events:none}
+.back-top.visible{opacity:1;pointer-events:auto}
+.back-top:hover{color:var(--text);border-color:var(--gold)}
+
+@media(max-width:640px){
+  .hero,.controls,.jump-bar,.main{padding-left:1rem;padding-right:1rem}
+  .section-tag{display:none}
+  .ep-right{display:none}
+  .album-art,.album-art-placeholder{width:40px;height:40px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">Adventures in Odyssey <span>Episode Guide</span></a>
+    <div class="header-links">
+      <a class="hlink" href="https://www.aiohq.com" target="_blank">AIO HQ ↗</a>
+      <a class="hlink" href="https://www.aiowiki.com" target="_blank">AIO Wiki ↗</a>
+      <a class="hlink" href="https://www.focusonthefamily.com/adventures-in-odyssey" target="_blank">Focus ↗</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-tag"><span class="dot"></span> Episodes 1–500 · With Audio</div>
+  <h1>Listen to <em>Adventures<br>in Odyssey</em></h1>
+  <p class="hero-sub">Click any episode to expand its audio player. All links sourced directly from the original site — officially uploaded by <a href="https://www.focusonthefamily.com" target="_blank">Focus on the Family</a>. Browse by year or album.</p>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hstat-n">495</span><span class="hstat-l">Episodes</span></div>
+    <div class="hstat-div"></div>
+    <div class="hstat"><span class="hstat-n">38</span><span class="hstat-l">Albums</span></div>
+    <div class="hstat-div"></div>
+    <div class="hstat"><span class="hstat-n">1987–02</span><span class="hstat-l">Years</span></div>
+  </div>
+</section>
+
+<div class="controls">
+  <div class="controls-row">
+    <div class="search-wrap">
+      <span class="search-ico">🔍</span>
+      <input class="search-in" id="searchIn" type="text" placeholder="Search episodes…" autocomplete="off">
+    </div>
+    <span class="mode-label">Group by</span>
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="modeYear">Year</button>
+      <button class="mode-btn" id="modeAlbum">Album</button>
+    </div>
+  </div>
+  <div class="search-count" id="searchCount"></div>
+</div>
+
+<div class="jump-bar" id="jumpBar"></div>
+<main class="main" id="mainContent"></main>
+<button class="back-top" id="backTop">↑</button>
+
+<script>var _U={1:"https://web.archive.org/web/20130408183215oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20130408.mp3",2:"Sd1013e8e-7d8d-48b1-8f8e-1461c1bf7193",3:"C003-lights-out-at-whits-end",4:"S1ae4e8ec-89dc-4f02-b260-30caf2a8b26b",5:"F2019/11/ody5_2019-12-06-Gifts-for-Madge-and-Guy.mp3",7:"Sde43ff7c-ebaa-4e32-9c14-744edaee4deb",8:"Aaio-vol00_202601143|01.%20008-%20Dental%20Dilemma.mp3",9:"C009-doing-unto-others",10:"S00046699-39d9-470a-80a0-aae3762181cd",11:"C011-addictions-can-be-habit-forming",12:"S9bda7ba1-5e3d-4113-a981-7b31d0ad2ccb",13:"C013-bobbys-valentine",14:"C014-missed-it-by-that-much",15:"Aaio-vol00_202601143|02.%20015-%20My%20Brother%27s%20Keeper.mp3",16:"Aaio-vol00_202601143|03.%20016-%20No%20Stupid%20Questions.mp3",17:"S1814402f-3a87-48a8-a5b7-69b7361c67ea",18:"Sc37f3c93-bf48-4870-aabb-7ef975b682f3",19:"S4681e9a8-5085-4c7a-a736-7c111910dfda",20:"Sb8360fe9-3e5b-4208-b879-1d941fcdf6d6",21:"C021-the-case-of-the-missing-train-car",22:"Aaio-vol00_202601143|04.%20022-%20A%20Simple%20Addition.mp3",23:"C023-the-quality-of-mercy",24:"C024-gotcha",25:"C025-harley-takes-the-case-part-1-of-2",26:"C026-harley-takes-the-case-part-2-of-2",27:"S5e0d8f52-c5aa-4591-b4a6-16620b96c4a9",28:"S672f80e3-ff5e-4fee-b9e0-144a95e302de",29:"S1d4117fa-13dc-4b1d-ab51-51de610ee4fb",30:"Aaio-vol00_202601143|05.%20030-%20Honor%20Thy%20Parents.mp3",31:"S80665e48-95ac-48ec-aa1a-85788c9119b3",32:"S43634094-8841-48df-a342-3764ad7387a0",33:"https://media.focusonthefamily.com/aio/mp3/AIO_033_The_Day_Independence_Came.mp3",34:"S2c86ac22-1039-4b05-a342-14810f49504a",35:"S4593fa77-a312-4b73-8f1b-336b6c517479",36:"Sbe201e97-db24-48b9-9f48-3a002682418d",37:"Seb4abb61-f158-4171-be18-5af895db2d5a",38:"Sf1e427ed-3c7c-434a-8535-a331429461c4",39:"F2019/07/001-039-The-Case-of-the-Secret-Room-Part-1-of-2.mp3",40:"S8ecd3ccc-64b9-4f2f-bf71-cb1d68cd49c0",41:"S6a47730d-56f2-4f90-b860-4cc9e8c6be84",42:"Sa27fc19d-2826-4fc4-b0c5-d12253c93229",43:"S7ea6be3e-d45c-4007-bbf8-b43fa86e9ccb",44:"Aaio-vol00_202601143|06.%20044-%20It%20Sure%20Seems%20Like%20It%20To%20Me.mp3",45:"Aaio-vol00_202601143|07.%20045-%20What%20Are%20We%20Gonna%20Do%20About%20Halloween.mp3",46:"S0934a213-8cab-42bd-b716-1a3fa58c64b7",47:"Sc85bb2c4-d2d7-4208-b03c-deb93322d7cd",48:"S3079f7f6-e553-4bf2-aa0e-f0d90941a8e7",49:"Sc47e041d-8e1b-4f97-b5a0-780a307a5481",50:"Sb647b8e0-ceb3-43f2-9aa3-17abb442c991",51:"S90614c28-5abc-4350-9ab8-774e6fd1ddab",52:"Sc3b880ab-8d7d-4308-a5fa-4f7b67b36dc7",53:"Sa92f6ab9-9bf5-4909-bf0e-b47fb22b1f92",54:"https://media.focusonthefamily.com/aio/mp3/Peace-on-Earth.mp3",55:"Aaio-vol00_202601143|08.%2055-%20Auld%20Lang%20Syne.mp3",56:"Se35ea70c-b5dc-41cf-9a8b-638ab6efafb6",57:"S12fa47bc-4e7d-4ad6-b09e-f00cfc732fad",58:"Scec9b414-694e-426b-8121-3132fdfb3379",59:"S20416f08-2d4e-4068-a873-a1788932551d",60:"S4d19d147-6f83-4a86-ab55-0e9777f6b04f",61:"Sc858b155-04c8-4e97-bcac-0b347441e080",62:"Sa5758fff-7fd9-4dbd-9993-d656dc7c6ab0",63:"S8bb759ca-20b6-4ec3-9d90-b8733379601c",64:"Sd9d5505a-5d4e-459a-a7d1-fde25b906d54",65:"S98f448b1-0fc0-4e9b-9db9-491f3615115d",66:"https://zcast.swncdn.com/episodes/zcast/focus-at-home/2019/10-08/811693/1468_202033055823.mp4",67:"https://zcast.swncdn.com/episodes/zcast/focus-at-home/2019/10-09/811695/1468_202033055854.mp4",68:"Sd5ccbfae-b0fb-4bcc-a861-62a95a642454",69:"S8eb44629-47d0-4548-a036-b98b211846c3",70:"C070-the-return-of-harley-part-1-of-2",71:"C071-the-return-of-harley-part-2-of-2",72:"Sdcf89916-1113-4a89-b9b0-17bb69253bf7",73:"Sb3f0b3dc-acfe-47e2-ac3f-784a4230ada5",74:"S90893e57-73a9-4f50-8af3-b78f89efbb96",75:"S61d75201-72b5-44df-8f3e-087eb0eeabc1",76:"Sefbda98c-9898-4d66-8475-ee8237e796bf",77:"S9b076442-287b-4a41-b6ae-33383a91a552",78:"Sbcca2ce7-2b98-4ec5-a3e7-a53f14b0cc00",79:"S067f8050-3f5f-4c57-9cf3-10f5d41bef0f",80:"https://media.focusonthefamily.com/aio/mp3/AIO_080_A_Prisoner_for_Christ.mp3",81:"Se69d6206-1bc4-44e7-83c6-754b2964ab62",82:"S6118e2e1-8581-4c5b-b458-472339edb26a",83:"S446df7b9-5c9a-4d90-a965-bb515260b497",84:"Sda706c40-857c-4925-888c-25efd40a04df",85:"https://focusonthefamily.mc.tritondigital.com/OFF_ADVENT_ODYSS_P/media/aio/mp3/aiopodcast57.mp3",86:"S70b3c378-5242-4ef8-a8a0-dbf34b57fff4",87:"S01ce42b9-4748-4fbc-ae09-e666cf16f0dc",88:"S6c07851b-3c3a-4fb7-9b16-300d81d2886d",89:"S590ab1ed-6c07-4a77-9731-00ca5d7fe5d7",90:"S90224180-3fac-4227-b253-c0968e602e86",91:"Sf543a8a2-e99c-4d2d-8acf-83523cae384e",92:"Sbf480ad7-f098-499e-a513-dd4703c02981",93:"S9eeb7512-9c78-4dc9-bf06-80e006b629c1",94:"Sa438ae9f-eb99-4339-b9eb-11f8c443cebc",95:"Sacf9772f-de0d-4388-af7a-e304d04fd69b",96:"Sdd3ee219-75d1-46e9-9bf3-4746aa78b0f1",97:"S31ef1248-6d6b-48e1-b6f3-40b5b947227a",98:"F2019/11/ody5_2019-12-12-The-Visitors.mp3",99:"Sb243d1d8-d6d8-40b6-8b0e-2211188d7802",100:"S5358fe80-e84c-4f89-84f0-144b9cfd5b28",101:"S69037793-62bf-4960-b2ef-9b54fa3dc9cd",102:"S38adcf83-0c01-477f-b8ef-6ee96846da32",103:"S720a9518-f94a-4296-97ac-0f519812916d",104:"F2019/07/001-104-Lincoln-Part-1-of-2.mp3",105:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/dd31cef0-299b-4574-a52c-3ae6d8adbbbf/audioFile.mp3",106:"S643cd346-1c45-4f14-982a-8285183d1c18",107:"Sf94e5939-18b9-488e-bd35-e282858db99d",108:"S76cd6233-2081-4d47-84b1-e62ca4228e95",109:"S86830938-ef87-49bf-bfde-5c2b9a6d250a",110:"S2ef7eae1-8187-4994-9fc7-7ea81c69021f",111:"S533d6777-8c17-464f-9186-70ccdc0b905c",112:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/25c3d39f-e97d-41b2-a1e9-718e97407b90/audioFile.mp3",113:"S59013ec9-495d-48f4-82ce-f9d8e2755770",114:"S86b8dac1-46b8-4628-a2c4-a68fb5bc5a78",115:"Sedbd5314-41e9-4c44-80e1-4fdddc872421",116:"Aaio-vol00_202601143|09.%20116-%20Isaac%20the%20Benevolent.mp3",117:"Aaio-vol00_202601143|10.%20117-%20The%20Trouble%20With%20Girls.mp3",118:"S5bd5962e-be1f-4243-bba9-8db439348412",119:"Sdf5d28a5-1e8f-4830-b996-f0d3bfc7fb14",120:"Sf9dbe195-79f9-4d93-911e-ec4db20989ca",121:"https://web.archive.org/web/20130827003104oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20130826.mp3",122:"Sf492c631-bec7-4453-9971-348ccbc993a3",123:"Sdd437a6b-2264-402d-b445-dcf69a6f3fa3",124:"Sa491673f-7f32-4802-8646-fb131401721a",125:"S0ed76a4d-1d8b-49d9-83c6-00fb96edf6b2",126:"https://web.archive.org/web/20111214032330oe_/fotf.cdnetworks.net/aio/mp3/wishfulthinking.mp3",127:"https://web.archive.org/web/20131114011009oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20130903.mp3",128:"S176d6f08-f6aa-401d-ba0a-853cd4ff82ab",129:"https://web.archive.org/web/20131114010956oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20130905.mp3",130:"https://web.archive.org/web/20131114010948oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20130906.mp3",131:"https://web.archive.org/web/20131114010935oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20130909.mp3",132:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/76f1b361-ef76-4928-8a09-00d0236eb02e/audioFile.mp3",133:"https://web.archive.org/web/20131114010927oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20130910.mp3",134:"Aaio-vol00_202601143|11.%20134-%20Pamela%20Has%20a%20Problem.mp3",135:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/7e3bbed8-14d1-4d4b-be30-2a10526ac291/audioFile.mp3",136:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/4956d8d0-fb93-4c7c-ae31-b04aee32fe21/audioFile.mp3",137:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/0282fde6-6e69-48a8-bf73-7ba4e8eb7943/audioFile.mp3",138:"https://web.archive.org/web/20131114010920oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131011.mp3",139:"https://web.archive.org/web/20131114010917oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131012.mp3",140:"https://web.archive.org/web/20131114010909oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131013.mp3",141:"https://web.archive.org/web/20131114010849oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131016.mp3",142:"Aaio-vol00_202601143|12.%20142-%20Train%20Ride.mp3",143:"https://web.archive.org/web/20131114010828oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131018.mp3",144:"https://web.archive.org/web/20131114010809oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131019.mp3",145:"https://web.archive.org/web/20131114010800oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131020.mp3",146:"https://web.archive.org/web/20131114010414oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131023.mp3",147:"https://web.archive.org/web/20131114010408oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131024.mp3",148:"https://web.archive.org/web/20131114010651oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131025.mp3",149:"https://media.focusonthefamily.com/aio/mp3/AIO_149_By_Dawns_Early_Light.mp3",150:"https://web.archive.org/web/20131114010606oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131026.mp3",151:"https://web.archive.org/web/20131114010345oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131027.mp3",152:"https://web.archive.org/web/20131114010311oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131030.mp3",153:"https://media.focusonthefamily.com/aio/mp3/AIO_153_Mayor_for_a_Day.mp3",154:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/2e5b095f-7013-497a-a214-e65fdc4e50b9/audioFile.mp3",155:"https://web.archive.org/web/20131114010245oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131003.mp3",156:"https://web.archive.org/web/20131114010231oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131004.mp3",157:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/6675b281-cf3c-4a8d-b426-8bc2ab489f9f/audioFile.mp3",158:"https://web.archive.org/web/20131114010158oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131008.mp3",159:"https://web.archive.org/web/20131114010146oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131009.mp3",160:"https://web.archive.org/web/20131114010138oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131010.mp3",161:"Aaio-vol00_202601143|13.%20161-%20Isaac%20the%20True%20Friend.mp3",162:"https://web.archive.org/web/20131114010105oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131014.mp3",163:"https://web.archive.org/web/20131114010052oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131015.mp3",164:"https://web.archive.org/web/20131114010026oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131016.mp3",165:"https://web.archive.org/web/20131114005958oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131017.mp3",166:"https://web.archive.org/web/20131114005539oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131018.mp3",168:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/517e9f92-8c7f-46fa-8f17-2e2f381aa61b/audioFile.mp3",169:"https://web.archive.org/web/20131114010545oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131022.mp3",170:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/4912c619-9f1f-44b8-93b9-56e246101b37/audioFile.mp3",171:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/330f7f60-a0bc-4658-a52d-02990799cf3f/audioFile.mp3",172:"https://web.archive.org/web/20131114010400oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131025.mp3",173:"Se0cdd820-108d-4b30-a22f-48e8dc785ced",174:"F2019/11/ody5_2019-12-13-Where_s-Your-Daddy.mp3",176:"https://media.focusonthefamily.com/aio/mp3/aio-the-star-pt1.mp3",177:"https://media.focusonthefamily.com/aio/mp3/aio-the-star-pt2.mp3",178:"https://web.archive.org/web/20131114011330oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131028.mp3",179:"https://web.archive.org/web/20131114011314oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131029.mp3",180:"https://web.archive.org/web/20131114011258oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131030.mp3",181:"https://web.archive.org/web/20131114011250oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131031.mp3",182:"https://web.archive.org/web/20131114011237oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131101.mp3",183:"https://web.archive.org/web/20131114011226oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131104.mp3",184:"https://media.focusonthefamily.com/aio/mp3/AIO_184_Isaac_the_Chivalrous.mp3",185:"https://web.archive.org/web/20131114011206oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131106.mp3",186:"https://web.archive.org/web/20131114011200oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131107.mp3",187:"https://web.archive.org/web/20131114011151oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131108.mp3",188:"https://web.archive.org/web/20131114011132oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131111.mp3",189:"https://web.archive.org/web/20131114011121oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131112.mp3",190:"https://web.archive.org/web/20131114011110oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131113.mp3",191:"F2019/08/ody5_2019-09-02.mp3",192:"F2019/08/ody5_2019-09-03.mp3",193:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/77359e18-d96c-427e-a83e-fae56ecd66cd/audioFile.mp3",194:"https://zcast.swncdn.com/episodes/zcast/focus-at-home/2019/10-15/811703/1468_20203306147.mp4",195:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/a7433a41-4ae9-41ad-b39b-991316359f87/audioFile.mp3",196:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/bdedba0f-f71f-4f3f-9c2a-c1923f6709b9/audioFile.mp3",197:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/eb97c25a-efef-4e4e-8068-9bfc04ecdda6/audioFile.mp3",198:"F2019/08/ody5_2019-09-11.mp3",199:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/038fb956-15ee-4974-ae7a-968f529a2e77/audioFile.mp3",200:"https://web.archive.org/web/20140602193705oe_/media.focusonthefamily.com/fotf/mp3/aio/aiow_20140517.mp3",201:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/b981d195-51da-4f72-a65f-8173991ad0eb/audioFile.mp3",202:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/b09e8632-a250-40bc-8b0b-4565e6904237/audioFile.mp3",203:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/14ef179c-685e-4b6e-adc3-5993eb500da3/audioFile.mp3",204:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/d5648922-73b5-4eaf-8be4-243aaee2a2df/audioFile.mp3",205:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/960c5ede-c17f-4b06-8152-8e24e1e8ce88/audioFile.mp3",206:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/60b60029-1593-47ed-b783-0f29ae72a79d/audioFile.mp3",207:"https://web.archive.org/web/20131212234304oe_/media.focusonthefamily.com/fotf/mp3/aio/aio_20131212.mp3",208:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/f2e76df2-146f-4bc2-b291-7948075e4e52/audioFile.mp3",209:"https://media.focusonthefamily.com/aio/mp3/AIO_209_Columbus_The_Grand_Voyage.mp3",210:"F2019/09/ody5_2019-10-01-On-Solid-Ground.mp3",211:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/28d01ca3-60d6-4cd3-937a-641fb8c96d2d/audioFile.mp3",212:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/212e62a5-9455-4ac3-9150-b62fe376fd76/audioFile.mp3",213:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/8027f3d4-5764-4913-815e-d06ee81ac095/audioFile.mp3",214:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/190b61e3-dc6b-4a9b-9ae1-2397659796fa/audioFile.mp3",215:"Sdcf4d8a3-daab-4928-9179-9b72c7019dc5",216:"F2019/09/ody5_2019-10-02-Like-Father-Like-Son.mp3",217:"F2019/09/ody5_2019-10-03-Rights-Wrongs-and-Reasons.mp3",218:"F2019/09/ody5_2019-10-04-A-Class-Act.mp3",219:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/9823a044-86f7-49de-8c7b-db48aac2e0ae/audioFile.mp3",220:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/7ab66efb-6a8b-4a74-993c-605e62908527/audioFile.mp3",221:"https://zcast.swncdn.com/episodes/zcast/focus-at-home/2019/09-03/818762/1468_20205811949.mp4",222:"Aaio-vol18_202601143|01.%20222-%20The%20Jesus%20Cloth.mp3",223:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/e82d5e42-fecc-47b6-a505-4515b51b1a25/audioFile.mp3",224:"Aaio-vol18_202601143|02.%20224-%20Greater%20Love.mp3",225:"Aaio-vol18_202601143|03.%20225-%20Count%20It%20All%20Joy.mp3",226:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/2e12e570-c8b2-4d3e-931c-8bf5b8d75a99/audioFile.mp3",227:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/fd04c388-be8d-4a72-af36-b759828c73a7/audioFile.mp3",228:"https://myhopenow111738-mhnstage.s3.us-east-2.amazonaws.com/public/audio/ff795f75-60ab-4390-aa1e-baa55bed99a8/broadcasts/538771ef-01e3-435a-bff0-a9681d61ff16/audioFile.mp3",229:"Aaio-vol18_202601143|04.%20229-%20The%20Marriage%20Feast.mp3",230:"Aaio-vol17_202601143|01.%20230-%20Our%20Father.mp3",231:"Aaio-vol17_202601143|02.%20231-%20Hallowed%20Be%20Thy%20Name.mp3",232:"Aaio-vol17_202601143|03.%20232-%20Thy%20Kingdom%20Come.mp3",233:"Aaio-vol17_202601143|04.%20233-%20Thy%20Will%20Be%20Done.mp3",234:"https://zcast.swncdn.com/episodes/zcast/focus-at-home/2019/10-16/811705/1468_20203306216.mp4",235:"Aaio-vol17_202601143|06.%20235-%20Forgive%20Us%20As%20We%20Forgive.mp3",236:"Aaio-vol17_202601143|07.%20236-%20Into%20Temptation.mp3",237:"Aaio-vol17_202601143|08.%20237-%20Deliver%20Us%20From%20Evil.mp3",238:"Aaio-vol17_202601143|09.%20238-%20For%20Thine%20is%20the%20Kingdom.mp3",239:"Aaio-vol17_202601143|10.%20239-%20The%20Power.mp3",240:"Aaio-vol17_202601143|11.%20240-%20And%20the%20Glory.mp3",241:"Aaio-vol17_202601143|12.%20241-%20Forever...%20Amen.mp3",242:"Aaio-vol18_202601143|05.%20242-%20Hymn%20Writers.mp3",243:"Aaio-vol18_202601143|06.%20243-%20Family%20Values.mp3",244:"Aaio-vol18_202601143|07.%20244-%20The%20Mysterious%20Stranger%2C%20Part%201.mp3",245:"Aaio-vol18_202601143|08.%20245-%20The%20Mysterious%20Stranger%2C%20Part%202.mp3",246:"Aaio-vol18_202601143|09.%20246-%20My%20Fair%20Bernard.mp3",247:"Aaio-vol18_202601143|10.%20247-%20Why%20Don%27t%20You%20Grow%20Up.mp3",248:"Aaio-vol18_202601143|11.%20248-%20Terror%20from%20the%20Skies.mp3",249:"Aaio-vol18_202601143|12.%20249-%20The%20Case%20of%20the%20Delinquent%20Disciples.mp3",250:"Aaio-vol19_202601143|01.%20250-%20Pilgrim%27s%20Progress%20Revisited%2C%20Part%201.mp3",251:"Aaio-vol19_202601143|02.%20251-%20Pilgrim%27s%20Progress%20Revisited%2C%20Part%202.mp3",252:"Aaio-vol19_202601143|03.%20252-%20The%20Bad%20Hair%20Day.mp3",253:"Aaio-vol19_202601143|04.%20253-%20A%20Time%20for%20Christmas.mp3",254:"Aaio-vol19_202601143|05.%20254-%20Truth%2C%20Trivia%20and%20%27Trina.mp3",255:"Aaio-vol19_202601143|06.%20255-%20The%20Boy%20Who%20Cried%20%27%27Destructo%21%27%27.mp3",256:"Aaio-vol19_202601143|07.%20256-%20Aloha%2C%20Oy%21%20Part%201.mp3",257:"Aaio-vol19_202601143|08.%20257-%20Aloha%2C%20Oy%21%20Part%202.mp3",258:"Aaio-vol19_202601143|09.%20258-%20Aloha%2C%20Oy%21%20Part%203.mp3",259:"Aaio-vol19_202601143|10.%20259-%20The%20Potential%20in%20Elliot.mp3",260:"Aaio-vol19_202601143|11.%20260-%20Naturally%2C%20I%20Assumed....mp3",261:"Aaio-vol20_202601143|01.%20261-%20Afraid%2C%20Not%21.mp3",262:"Aaio-vol19_202601143|12.%20262-%20A%20Prayer%20for%20George%20Barclay.mp3",263:"Aaio-vol20_202601143|02.%20263-%20When%20Bad%20Isn%27t%20So%20Good.mp3",264:"Aaio-vol20_202601143|03.%20264-%20Making%20the%20Grade.mp3",265:"Aaio-vol20_202601143|04.%20265-%20War%20of%20the%20Words.mp3",266:"Aaio-vol20_202601143|05.%20266-%20It%20Began%20with%20a%20Rabbit%27s%20Foot.mp3",267:"Aaio-vol20_202601143|06.%20267-%20It%20Ended%20with%20a%20Handshake.mp3",268:"Aaio-vol20_202601143|07.%20268-%20Pet%20Peeves.mp3",269:"Aaio-vol20_202601143|08.%20269-%20Fences.mp3",270:"Aaio-vol20_202601143|09.%20270-%20The%20War%20Hero.mp3",271:"Aaio-vol20_202601143|10.%20271-%20The%20Secret%20Keys%20of%20Discipline.mp3",272:"Aaio-vol20_202601143|11.%20272-%20Two%20Brothers%20and%20Bernard%2C%20Part%201.mp3",273:"Aaio-vol20_202601143|12.%20273-%20Two%20Brothers%20and%20Bernard%2C%20Part%202.mp3",274:"Aaio-vol21_202601143|01.%20274-%20First%20Hand%20Experience.mp3",275:"Aaio-vol21_202601143|02.%20275-%20Second%20Thoughts.mp3",276:"Aaio-vol21_202601143|03.%20276-%20Third%20Degree.mp3",277:"Aaio-vol21_202601143|04.%20277-%20It%20Happened%20at%20Four%20Corners.mp3",278:"Aaio-vol21_202601143|05.%20278-%20The%20Fifth%20House%20on%20the%20Left%2C%20Part%201.mp3",279:"Aaio-vol21_202601143|06.%20279-%20The%20Fifth%20House%20on%20the%20Left%2C%20Part%202.mp3",280:"Aaio-vol21_202601143|07.%20280-%20Gone....mp3",281:"Aaio-vol21_202601143|08.%20281-%20...But%20Not%20Forgotten.mp3",282:"Aaio-vol21_202601143|09.%20282-%20The%20Fundamentals.mp3",283:"Aaio-vol21_202601143|10.%20283-%20A%20Book%20by%20Its%20Cover.mp3",284:"Aaio-vol21_202601143|11.%20284-%20The%20Election%20Deception.mp3",285:"A22-the-changing-times|%2322%20-%20The%20Changing%20Times%2F%23285%20George%20Under%20Pressure.mp3",286:"A22-the-changing-times|%2322%20-%20The%20Changing%20Times%2F%23286%20Tom%20for%20Mayor%2C%20Part%201%20of%202.mp3",287:"A22-the-changing-times|%2322%20-%20The%20Changing%20Times%2F%23287%20Tom%20for%20Mayor%2C%20Part%202%20of%202.mp3",288:"Aaio-vol21_202601143|12.%20288-%20The%20Twilife%20Zone.mp3",289:"A22-the-changing-times|%2322%20-%20The%20Changing%20Times%2F%23289%20A%20Call%20for%20Reverend%20Jimmy.mp3",290:"A22-the-changing-times|%2322%20-%20The%20Changing%20Times%2F%23290%20A%20Name%2C%20Not%20a%20Number%2C%20Part%201%20of%202.mp3",291:"A22-the-changing-times|%2322%20-%20The%20Changing%20Times%2F%23291%20A%20Name%2C%20Not%20a%20Number%2C%20Part%202%20of%202.mp3",292:"A22-the-changing-times|%2322%20-%20The%20Changing%20Times%2F%23292%20Siege%20at%20Jericho.mp3",293:"A22-the-changing-times|%2322%20-%20The%20Changing%20Times%2F%23293%20A%20Code%20of%20Honor.mp3",294:"A22-the-changing-times|%2322%20-%20The%20Changing%20Times%2F%23294%20Unto%20Us%20a%20Child%20Is%20Born.mp3",295:"A22-the-changing-times|%2322%20-%20The%20Changing%20Times%2F%23295%20Soaplessly%20Devoted.mp3",296:"A22-the-changing-times|%2322%20-%20The%20Changing%20Times%2F%23296%20Red%20Wagons%20and%20Pink%20Flamingos.mp3",297:"A22-the-changing-times|%2322%20-%20The%20Changing%20Times%2F%23297%20Blackbeard%27s%20Treasure.mp3",298:"A23-twists-and-turns|%23298%20I%20Want%20My%20B-TV%21.mp3",299:"A23-twists-and-turns|%23299%20The%20Truth%20About%20Zachary.mp3",300:"A23-twists-and-turns|%23300%20Preacher%27s%20Kid.mp3",301:"A23-twists-and-turns|%23301%20The%20Good%2C%20the%20Bad%20and%20Butch.mp3",302:"A23-twists-and-turns|%23302%20Share%20and%20Share%20Alike.mp3",303:"A23-twists-and-turns|%23303%20All%20the%20Difference%20in%20the%20World.mp3",304:"A23-twists-and-turns|%23304%20Saint%20Paul%20-%20The%20Man%20from%20Tarsus.mp3",305:"A23-twists-and-turns|%23305%20Saint%20Paul%20-%20Set%20Apart%20by%20God.mp3",306:"A23-twists-and-turns|%23306%20A%20Victim%20of%20Circumstance.mp3",307:"F2020/02/ody5_2020-03-02-Poetry-in-Slow-Motion.mp3",308:"F2020/02/ody5_2020-03-03-Subject-Yourself.mp3",309:"A23-twists-and-turns|%23309%20The%20Perfect%20Witness%2C%20Part%201%20of%203.mp3",310:"A23-twists-and-turns|%23310%20The%20Perfect%20Witness%2C%20Part%202%20of%203.mp3",311:"A23-twists-and-turns|%23311%20The%20Perfect%20Witness%2C%20Part%203%20of%203.mp3",312:"F2020/02/ody5_2020-03-09-Rewards-in-Full.mp3",313:"F2020/02/ody5_2020-03-10-Top-This.mp3",314:"F2020/02/ody5_2020-03-11-The-Underground-Railroad-Part-1-of-3.mp3",315:"F2020/02/ody5_2020-03-12-The-Underground-Railroad-Part-2-of-3.mp3",316:"F2020/02/ody5_2020-03-13-The-Underground-Railroad-Part-3-of-3.mp3",317:"F2020/02/ody5_2020-03-16-B-TV-Envy.mp3",318:"F2020/02/ody5_2020-03-17-A-Touch-of-Healing-Part-1-of-2.mp3",319:"F2020/02/ody5_2020-03-18-A-Touch-of-Healing-Part-2-of-2.mp3",320:"F2020/02/ody5_2020-03-19-Where-Is-Thy-Sting.mp3",321:"F2019/10/AIO-sample-Hidden-in-my-Heart.mp3",322:"F2020/02/ody5_2020-03-23-The-Turning-Point.mp3",323:"F2020/02/ody5_2020-03-24-A-Little-Credit-Please.mp3",324:"F2020/02/ody5_2020-03-25-Small-Fires-Little-Pools.mp3",325:"F2020/02/ody5_2020-03-26-Angels-Unaware.mp3",326:"F2020/02/ody5_2020-03-27-Gathering-Thunder.mp3",327:"F2020/02/ody5_2020-03-30-Moving-Targets.mp3",328:"F2020/02/ody5_2020-03-31-Hard-Losses.mp3",329:"F2020/03/ody5_2020-04-01-The-Return.mp3",330:"F2020/03/ody5_2020-04-02-The-Time-Has-Come.mp3",331:"F2020/03/ody5_2020-04-03-Checkmate.mp3",332:"F2020/03/ody5_2020-04-06-Another-Chance.mp3",333:"F2020/03/ody5_2020-04-07-The-Last-Resort.mp3",334:"F2020/03/ody5_2020-04-08-The-Final-Conflict.mp3",335:"F2020/03/ody5_2020-04-09-Love-Is-in-the-Air-Part-1-of-2.mp3",336:"F2020/03/ody5_2020-04-10-Love-Is-in-the-Air-Part-2-of-2.mp3",337:"https://zcast.swncdn.com/episodes/zcast/focus-at-home/2019/10-25/811715/1468_20203306746.mp4",338:"F2020/03/ody5_2020-04-14-Easy-Money.mp3",339:"F2020/03/ody5_2020-04-15-Do-for-a-Change.mp3",340:"F2020/03/ody5_2020-04-16-Pokenberry-Falls-R.F.D.-Part-1-of-2.mp3",341:"F2020/03/ody5_2020-04-17-Pokenberry-Falls-R.F.D.-Part-2-of-2.mp3",342:"F2020/03/ody5_2020-04-20-Welcome-Home-Mr.-Blackgaard.mp3",343:"F2020/03/ody5_2020-04-21-The-Pretty-Good-Samaritan.mp3",344:"Aaio-vol27_20260117|01.%20344-%20Letting%20Go.mp3",345:"Aaio-vol27_20260117|02.%20345-%20B-TV-%20Compassion.mp3",346:"F2020/03/ody5_2020-04-27-Saint-Paul-Voyage-to-Rome.mp3",347:"F2020/03/ody5_2020-04-28-Saint-Paul-An-Appointment-with-Caesar.mp3",348:"Aaio-vol27_20260117|03.%20348-%20With%20a%20Little%20Help%20from%20My%20Friends.mp3",349:"Aaio-vol27_20260117|04.%20349-%20Blessings%20in%20Disguise.mp3",350:"Aaio-vol27_20260117|05.%20350-%20The%20Time%20of%20Our%20Lives.mp3",351:"Aaio-vol27_20260117|06.%20351-%20What%20Are%20You%20Gonna%20Do%20with%20Your%20Life.mp3",352:"Aaio-vol27_20260117|07.%20352-%20Memories%20of%20Jerry.mp3",353:"Aaio-vol27_20260117|08.%20353-%20A%20Question%20About%20Tasha.mp3",354:"Aaio-vol27_20260117|09.%20354-%20Blind%20Justice.mp3",355:"Aaio-vol27_20260117|10.%20355-%20The%20Search%20for%20Whit%2C%20Part%201.mp3",356:"Aaio-vol27_20260117|11.%20356-%20The%20Search%20for%20Whit%2C%20Part%202.mp3",357:"Aaio-vol27_20260117|12.%20357-%20The%20Search%20for%20Whit%2C%20Part%203.mp3",358:"A28-welcome-home|%23358%20The%20Secret%20Weapon.mp3",359:"A28-welcome-home|%23359%20The%20Merchant%20of%20Odyssey.mp3",360:"A28-welcome-home|%23360%20Three%20Funerals%20and%20a%20Wedding%2C%20Part%201%20of%202.mp3",361:"A28-welcome-home|%23361%20Three%20Funerals%20and%20a%20Wedding%2C%20Part%202%20of%202.mp3",362:"A28-welcome-home|%23362%20The%20Right%20Choice%2C%20Part%201%20of%202.mp3",363:"A28-welcome-home|%23363%20The%20Right%20Choice%2C%20Part%202%20of%202.mp3",364:"A28-welcome-home|%23364%20Home%2C%20Sweet%20Home.mp3",365:"A28-welcome-home|%23365%20Clara.mp3",366:"A28-welcome-home|%23366%20Solitary%20Refinement.mp3",367:"A28-welcome-home|%23367%20The%20Decision.mp3",368:"A28-welcome-home|%23368%20The%20Other%20Woman.mp3",369:"A28-welcome-home|%23369%20It%27s%20a%20Wrap%21.mp3",370:"A085-you-go-to-school-where|370%20Christmas%20Around%20the%20World%2C%20Part%201.mp3",371:"A085-you-go-to-school-where|371%20Christmas%20Around%20the%20World%2C%20Part%202.mp3",372:"S44431fa5-3410-4da9-97b2-0b0ab9e7fc32",373:"Scf43480c-7ff0-4c95-82cf-ede28877897f",374:"S5041bd71-f5c9-40f3-b888-77aed67a6adc",375:"F2020/04/ody5_2020-05-28-The-Pushover.mp3",376:"F2020/04/ody5_2020-05-29-Chores-No-More.mp3",377:"Sa7a85127-1283-4cf3-8c53-a952e908d67d",378:"Sa1141179-2956-4218-8193-6a9807ec93d6",379:"Sbd8690be-e6ab-4a1c-881c-5afa2c4e8fdc",380:"S1348aaec-3101-4817-acb0-de6bb26a40e8",381:"S72865bdb-a39f-4f64-a084-ce0fcc8ced78",382:"S6608cbec-ba51-49e0-bcf0-14a90e529897",383:"https://media.focusonthefamily.com/aio/mp3/AIO_383_BTV_Thanks.mp3",384:"Sd0f30d6f-6a91-4545-b3a6-ba7d4aac24ec",385:"https://media.focusonthefamily.com/aio/mp3/AIO_385_Its_a_Pokenberry_Christmas_Part_1_of_2.mp3",386:"https://media.focusonthefamily.com/aio/mp3/AIO_386_Its_a_Pokenberry_Christmas_Part_2_of_2.mp3",387:"https://web.archive.org/web/20210104233735oe_/cdn.subsplash.com/audios/FMDDCD/_source/2b39d0c5-f2cb-4e60-8ae5-848047da9c5a/audio.mp3",388:"Sd51dbef5-9748-4e50-ac91-930889d8a7f2",389:"Sf9c2bd8d-22eb-4a72-bc20-b605750d3e2f",390:"Sd9bcf0eb-e7b9-472c-9907-cb914271bf4a",391:"S68ddd52e-90df-421e-9f86-7c2eacb946ff",392:"https://media.focusonthefamily.com/aio/mp3/AIO_392_When_in_Doubt_Pray.mp3",393:"Sf2430b31-ada2-4d14-832c-fde3a6b1d119",394:"S1786ac1e-a650-411f-993c-4fffbdb5f0d4",395:"S950629a9-bfd3-4878-8fb9-aec899bff50a",396:"S83e0f9be-4405-4971-a3a8-b7fe934de7aa",397:"S79473f88-025e-42ac-928c-da7ecdcf3bd6",398:"Sa3b26be4-ba73-412a-a194-20e5505d4683",399:"S47c88e0a-b05e-4098-b51e-b4754476c258",400:"S6b43de6f-90f8-4dcf-a0de-f0091c999c2e",401:"Sced983a7-7170-464b-9c14-04cca35e7469",402:"https://media.focusonthefamily.com/aio/mp3/AIO_402_Arizona_Sunrise.mp3",403:"S7aa44924-9ba3-4584-9611-4f13962da441",404:"https://media.focusonthefamily.com/aio/mp3/AIO_404_Hide_and_Seek.mp3",405:"S17313d30-4d94-48fd-90b1-49be85a27e45",406:"Sb9190a3d-3743-4103-92c6-7355e9856456",407:"Sf9b7ca6d-69dd-46fc-959e-9734b938f0a0",408:"S8367cfd0-70dd-466d-87de-cb8ec75b2ac0",409:"S92e281a4-d6f3-4ddb-92bd-278f68ff6e4b",410:"S7465dfa2-0127-4049-8ebb-f331e9c30281",411:"Sbf6e25f5-350c-4ca8-8c7b-fded792f9768",412:"Scf3cbcf2-d2a4-40bf-9f16-e92fe945e1d8",413:"Sad4aad5d-d989-4f64-bebf-587f7bbeb438",414:"S5dabcac4-e234-4e40-b84d-09cd81cfe1b4",415:"S0e1737ea-b99f-4e4a-ab77-e05e50390fc0",416:"https://media.focusonthefamily.com/aio/mp3/AIO_416_The_Tower.mp3",417:"Sfaa0e3c7-bfe3-4a82-92cf-fe7d4819afcb",418:"S63ff5858-43a8-48ad-8eb5-398e5b1a2760",419:"S42febbbd-b842-43de-abf7-7bccf7517a27",420:"S68a24e92-d526-458c-9df1-5cb00b1ce01c",421:"S2c7e157a-3c91-43b7-81df-e11ae0377aa3",422:"Sd5aa094c-22ea-4552-b269-78dc7b0261be",423:"Sbfc96c0c-cba5-49ce-93f0-0c8a43f0f848",424:"S230c3bc1-aa8c-4df1-bee6-1be609366d2b",425:"S598a3dd0-5cf2-410d-a85b-ef9d04ef519e",426:"S1b622d8c-2884-4305-ac5c-e82719a28b37",427:"S87f6c6c7-7b6a-46b3-a8ed-b6e325b19118",428:"S931731a8-548a-46a5-bf81-e035efd65a89",429:"Sa315ddf6-2549-4979-acee-8cae2e4f9506",430:"S9587c52c-8867-41f1-8b35-e68e1dac4bf2",431:"S1f57e324-4bb6-4fd4-bcc1-e9be56c53c8a",432:"Sdf638a89-d1c8-4dba-a8f5-ca9138fbee85",433:"S1e25996e-b26f-4b01-ab07-cbe40a609707",434:"Aaio-vol48_202601143|01.%20434-%20B-TV-%20Redeeming%20the%20Season.mp3",435:"Aaio-vol00_202601143|14.%20435-%20A%20Look%20Back%2C%20Part%201.mp3",436:"Aaio-vol00_202601143|15.%20436-%20A%20Look%20Back%2C%20Part%202.mp3",437:"S1db4efd9-5abe-4c1a-bea4-cebeb3c8c898",438:"A085-you-go-to-school-where|438%20Lyin%27%20Tale%20%26%20The%20Telltale%20Cat.mp3",439:"A085-you-go-to-school-where|439%20BTV%20-%20Grace.mp3",440:"S67018b59-dae5-4582-bc1a-c89a9d4ff21d",441:"S7ba18acf-ffad-460a-a1fa-5eb8b7c473d5",442:"A085-you-go-to-school-where|442%20Two%20Roads%20%26%20Sticks%20and%20Stones.mp3",443:"S12c3576c-7273-4474-9ddf-aa50276d116e",444:"Sbd8739db-d6c1-42ce-8ff7-8acd6f60ce82",445:"S0650149b-7e8b-47f6-8e4c-edefac1688ae",446:"Sf17e56a1-dfc3-4535-a52c-9e2b92c9189a",447:"S786203dd-cb0f-4d02-bc64-20ded6d569e0",448:"Se0c28256-e662-422e-934c-5dfd82583767",449:"A35-the-big-picture|%2335%20-%20The%20Big%20Picture%2F%23449%20The%20Big%20Deal%2C%20Part%201%20of%202.mp3",450:"A35-the-big-picture|%2335%20-%20The%20Big%20Picture%2F%23450%20The%20Big%20Deal%2C%20Part%202%20of%202.mp3",451:"A35-the-big-picture|%2335%20-%20The%20Big%20Picture%2F%23451%20Life%20Trials%20of%20the%20Rich%20and%20Famous.mp3",452:"A35-the-big-picture|%2335%20-%20The%20Big%20Picture%2F%23452%20Missionary%20-%20Impossible.mp3",453:"A35-the-big-picture|%2335%20-%20The%20Big%20Picture%2F%23453%20The%20Great%20Wishy%20Woz%2C%20Part%201%20of%202.mp3",454:"A35-the-big-picture|%2335%20-%20The%20Big%20Picture%2F%23454%20The%20Great%20Wishy%20Woz%2C%20Part%202%20of%202.mp3",455:"A35-the-big-picture|%2335%20-%20The%20Big%20Picture%2F%23455%20Best%20Laid%20Plans.mp3",456:"A35-the-big-picture|%2335%20-%20The%20Big%20Picture%2F%23456%20Worst%20Day%20Ever.mp3",457:"A35-the-big-picture|%2335%20-%20The%20Big%20Picture%2F%23457%20Opportunity%20Knocks.mp3",458:"A35-the-big-picture|%2335%20-%20The%20Big%20Picture%2F%23458%20Red%20Herring.mp3",459:"A35-the-big-picture|%2335%20-%20The%20Big%20Picture%2F%23459%20Slumber%20Party.mp3",460:"Sf4bce811-0270-4ea4-82f6-b2262cfe4721",461:"Se9c88d4a-c980-428c-8e18-f169960f7450",462:"Aaio-vol36_20260313|01.%20462-%20The%20W.E..mp3",463:"Aaio-vol36_20260313|02.%20463-%20Green%20Eyes%20and%20Yellow%20Tulips.mp3",464:"Aaio-vol36_20260313|03.%20464-%20The%20Triangle%2C%20Part%201.mp3",465:"Aaio-vol36_20260313|04.%20465-%20The%20Triangle%2C%20Part%202.mp3",466:"Aaio-vol36_20260313|05.%20466-%20Snow%20Day.mp3",467:"Aaio-vol36_20260313|06.%20467-%20Broken%20Window.mp3",468:"Aaio-vol36_20260313|07.%20468-%20Chains%2C%20Part%201.mp3",469:"Aaio-vol36_20260313|08.%20469-%20Chains%2C%20Part%202.mp3",470:"Aaio-vol36_20260313|09.%20470-%20Break%20a%20Leg.mp3",471:"Aaio-vol36_20260313|10.%20471-%20Fifteen%20Minutes.mp3",472:"Aaio-vol36_20260313|11.%20472-%20Welcoming%20Wooton.mp3",473:"Aaio-vol36_20260313|12.%20473-%20Breaking%20Point.mp3",474:"S8937eab1-48c4-4998-bd87-4691335ec50b",475:"Sd795273e-b22d-4ea5-b52f-3132e959de45",476:"https://web.archive.org/web/20120724204500oe_/media.focusonthefamily.com/aio/mp3/relatively_annoying.mp3",477:"S90449afa-9918-41db-bd65-a37c18510767",478:"S697fb6be-92e3-44b8-bc28-dffe351d80b7",479:"S040c8f95-fbfb-4bc7-8dae-006a840a4f40",480:"https://web.archive.org/web/20201228084129oe_/cdn.subsplash.com/audios/FMDDCD/_source/1156fdca-e5c1-4a9b-be48-202619b33326/audio.mp3",481:"Sf8f5fa6e-90ac-497e-9e1f-521bdba1973f",482:"Sda24c9d2-7a96-45fb-a52c-53dc7858b328",483:"Sacd860e1-9a2c-4f19-8918-8f51a46f2ac5",484:"S8306fb63-effe-4655-bad6-9df1caaf0858",485:"Saf73d3e5-9996-4aee-8218-be7f070032f4",486:"S266a757c-99f2-4e45-974b-161edc7d1890",487:"S44096400-6d9c-4120-8c53-68a628e2488c",488:"S0ff052e8-1c7c-4828-affa-ef95aea0b40a",489:"S8e7b2d95-e2f4-413f-8ea4-bd3c3fc7f67c",490:"Aaio-vol38_20260228|03.%20490-%20The%20Black%20Veil%2C%20Part%201.flac",491:"S68336e14-f42c-44db-af84-64c79f3be90b",492:"S7519c468-1671-4141-970e-f4204abd8a29",493:"Saea00a27-7a60-4b38-981d-41590c4217fe",494:"S7e8b3966-a24d-4067-9741-143f9b3e6394",495:"S213d4e9e-ea6e-464d-9bb9-6de1059ea358",496:"Se205255a-3990-4236-86bb-991b5bd8a271",497:"S430d6bfb-a957-4cf5-b009-ccbc0733cd6f",498:"Sdf9c53ee-c41b-4b1f-86bc-63f45425ddb6",499:"Sf4da98ae-d589-4531-897d-8d2313eeade9",500:"Aaio-vol00_202601143|16.%20500-%20500.mp3",501:"Aaio-vol00_202601143|17.%20501-%20Inside%20the%20Studio.mp3"};
+var _E={1:["Whit's Flop",1987],2:["The Life of the Party",1987],3:["Lights Out at Whit's End",1987],4:["Connie Comes to Town",1987],5:["Gifts for Madge and Guy",1987,2,"2022 airing"],7:["Promises, Promises",1988],8:["Dental Dilemma",1988],9:["Doing Unto Others",1988],10:["Nothing to Fear",1988],11:["Addictions Can Be Habit-Forming",1988],12:["The Tangled Web",1988],13:["Bobby's Valentine",1988],14:["Missed It By That Much",1988],15:["My Brother's Keeper",1988],16:["No Stupid Questions",1988],17:["A Member of the Family, Part 1 of 2",1988],18:["A Member of the Family, Part 2 of 2",1988],19:["Recollections",1988],20:["Mike Makes Right",1988],21:["The Case of the Missing Train Car",1988],22:["A Simple Addition",1988],23:["The Quality of Mercy",1988],24:["Gotcha!",1988],25:["Harley Takes the Case, Part 1 of 2",1988],26:["Harley Takes the Case, Part 2 of 2",1988],27:["A Change of Hart",1988],28:["The Price of Freedom",1988],29:["Rumor Has It",1988],30:["Honor Thy Parents",1988],31:["Family Vacation, Part 1 of 2",1988],32:["Family Vacation, Part 2 of 2",1988],33:["The Day Independence Came",1988,2,"broadcast version"],34:["Stormy Weather",1988],35:["V.B.S. Blues",1988],36:["Kids' Radio",1988],37:["Camp What-A-Nut, Part 1 of 2",1988],38:["Camp What-A-Nut, Part 2 of 2",1988,2,"2016 airing"],39:["The Case of the Secret Room, Part 1 of 2",1988,2,"broadcast version"],40:["The Case of the Secret Room, Part 2 of 2",1988],41:["Return to the Bible Room",1988],42:["The Last Great Adventure of the Summer",1988],43:["Back to School",1988],44:["It Sure Seems Like It to Me",1988],45:["What Are We Gonna Do About Halloween?",1988],46:["The Shepherd and the Giant",1988],47:["A Single Vote",1988],48:["Heroes",1988],49:["Thank You, God",1988],50:["Karen",1988],51:["Connie, Part 1 of 2",1988],52:["Connie, Part 2 of 2",1988],53:["The Sacred Trust",1988],54:["Peace on Earth",1988],55:["Auld Lang Syne",1988],56:["By Faith, Noah",1989],57:["The Prodigal, Jimmy",1989],58:["A Matter of Obedience",1989],59:["A Worker Approved",1989],60:["And When You Pray...",1989],61:["The Boy Who Didn't Go to Church",1989],62:["Let This Mind Be in You",1989],63:["A Good and Faithful Servant",1989],64:["The Greatest of These",1989],65:["Bad Company",1989],66:["The Imagination Station, Part 1 of 2",1989,2,"broadcast version"],67:["The Imagination Station, Part 2 of 2",1989,2,"broadcast version"],68:["Choices",1989],69:["Go Ye Therefore",1989],70:["The Return of Harley, Part 1 of 2",1989],71:["The Return of Harley, Part 2 of 2",1989],72:["An Encounter with Mrs. Hooper",1989],73:["A Bite of Applesauce",1989],74:["Connie Goes to Camp, Part 1 of 2",1989],75:["Connie Goes to Camp, Part 2 of 2",1989],76:["Eugene's Dilemma",1989],77:["The Nemesis, Part 1 of 2",1989],78:["The Nemesis, Part 2 of 2",1989,2,"2019 airing"],79:["Our Best Vacation Ever",1989],80:["A Prisoner for Christ",1989,2,"broadcast version"],81:["Good Business",1989],82:["Heatwave",1989],83:["The Battle, Part 1 of 2",1989],84:["The Battle, Part 2 of 2",1989],85:["You Go to School Where?",1989],86:["Isaac the Insecure",1989],87:["Elijah, Part 1 of 2",1989],88:["Elijah, Part 2 of 2",1989],89:["That's Not Fair!",1989],90:["But, You Promised",1989],91:["A Mission for Jimmy",1989],92:["The Ill-Gotten Deed",1989],93:["Rescue from Manatugo Point",1989],94:["Operation: Dig-Out",1989],95:["The Very Best of Friends",1989],96:["The Reluctant Rival",1989,2,"2019 airing"],97:["Monty's Christmas",1989,2,"2019 airing"],98:["The Visitors",1989,2,"2022 airing"],99:["The Barclay Family Ski Vacation",1989],100:["Ice Fishing",1990,1],101:["Scattered Seeds",1990],102:["The Treasure of LeMonde!",1990],103:["Front Page News",1990],104:["Lincoln, Part 1 of 2",1990],105:["Lincoln, Part 2 of 2",1990],106:["By Any Other Name",1990],107:["Bad Luck",1990],108:["Isaac the Courageous",1990],109:["Two Sides to Every Story",1990],110:["A...is for Attitude",1990],111:["First Love",1990],112:["Curious, Isn't It?",1990],113:["Suspicious Minds",1990],114:["The Big Broadcast",1990],115:["An Act of Mercy",1990],116:["Isaac the Benevolent",1990],117:["The Trouble with Girls",1990],118:["What Happened to the Silver Streak?",1990],119:["Better Late Than Never",1990],120:["Pranks for the Memories",1990],121:["Missing Person",1990,2,"2022 airing"],122:["Castles and Cauldrons, Part 1 of 2",1990],123:["Castles and Cauldrons, Part 2 of 2",1990],124:["The Winning Edge",1990],125:["All's Well with Boswell",1990],126:["Wishful Thinking",1990,2,"2013 | 2022 airing"],127:["Have You No Selpurcs?",1990,2,"2022 airing"],128:["One Bad Apple",1990],129:["Not One of Us",1990,2,"2022 airing"],130:["Bernard and Joseph, Part 1 of 2",1990],131:["Bernard and Joseph, Part 2 of 2",1990],132:["Thanksgiving at Home",1990],133:["Cousin Albert",1990,2,"2022 airing"],134:["Pamela Has a Problem",1990],135:["Back to Bethlehem, Part 1 of 3",1990],136:["Back to Bethlehem, Part 2 of 3",1990],137:["Back to Bethlehem, Part 3 of 3",1990],138:["The Adventure of the Adventure",1990,2,"2022 airing"],139:["Melanie's Diary",1991,2,"2022 airing"],140:["The Vow",1991],141:["Over the Airwaves",1991],142:["Train Ride",1991,2,"2022 airing"],143:["Muckraker",1991,2,"2022 airing"],144:["Someone to Watch Over Me",1991,2,"2022 airing"],145:["The Second Coming",1991,2,"2022 airing"],146:["Emotional Baggage",1991],147:["Where There's a Will...",1991],148:["Isaac the Procrastinator",1991,2,"2022 airing"],149:["By Dawn's Early Light",1991,2,"broadcast version"],150:["Home is Where the Hurt Is",1991,2,"2022 airing"],151:["...And the Last Shall Be First",1991,2,"2022 airing"],152:["The Meaning of Sacrifice",1991,2,"2022 airing"],153:["Mayor for a Day",1991,2,"2022 airing"],154:["Coming of Age",1991,2,"2022 airing"],155:["Waylaid in the Windy City, Part 1 of 2",1991,2,"2022 airing"],156:["Waylaid in the Windy City, Part 2 of 2",1991,2,"2022 airing"],157:["Last in a Long Line",1991],158:["A Day in the Life",1991,2,"2022 airing"],159:["The Homecoming",1991,2,"2022 airing"],160:["A Rathbone of Contention",1991,2,"2022 airing"],161:["Isaac the True Friend",1991,2,"broadcast version"],162:["Peacemaker",1991,2,"2022 airing"],163:["A Model Child",1991,2,"2022 airing"],164:["Sixties-Something",1991,2,"2022 airing"],165:["Bernard and Esther, Part 1 of 2",1991,2,"2022 airing"],166:["Bernard and Esther, Part 2 of 2",1991,2,"2022 airing"],168:["The Curse",1991],169:["Hold Up!",1991,2,"2022 airing"],170:["A Test for Robyn",1991],171:["The Cross of Cortes, Part 1 of 2",1991],172:["The Cross of Cortes, Part 2 of 2",1991,2,"2022 airing"],173:["A Thanksgiving Carol",1991],174:["Where's Your Daddy?",1991,2,"2022 airing"],176:["The Star, Part 1 of 2",1991],177:["The Star, Part 2 of 2",1991],178:["Room Mates",1991],179:["You Gotta Be Wise",1992,2,"2022 airing"],180:["Isaac the Pure",1992,2,"2022 airing"],181:["It Takes Integrity",1992,2,"2022 airing"],182:["The Scales of Justice",1992,2,"2022 airing"],183:["Tales of Moderation",1992,2,"2022 airing"],184:["Isaac the Chivalrous",1992,2,"broadcast version"],185:["A Question of Loyalty",1992,2,"2022 airing"],186:["The Conscientious Cross-Guard",1992,2,"2022 airing"],187:["An Act of Nobility",1992,2,"2022 airing"],188:["The Courage to Stand",1992,2,"2022 airing"],189:["No, Honestly!",1992,2,"2022 airing"],190:["Moses: The Passover, Part 1 of 2",1992,2,"2022 airing"],191:["Moses: The Passover, Part 2 of 2",1992,2,"2022 airing"],192:["Modesty is the Best Policy",1992,2,"2022 airing"],193:["A Tongue of Fire",1992],194:["A License to Drive",1992,2,"broadcast version"],195:["Father's Day",1992],196:["Harlow Doyle, Private Eye",1992],197:["The Midnight Ride",1992],198:["Treasure Hunt",1992,2,"2022 airing"],199:["The 'No' Factor",1992],200:["Feud for Thought",1992,1],201:["Fair-Weather Fans",1992],202:["Timmy's Cabin",1992],203:["Double Trouble",1992],204:["Wonderworld",1992],205:["Flash Flood",1992],206:["Pen Pal",1992],207:["The Case of the Candid Camera",1992,2,"2022 airing"],208:["Pipe Dreams",1992],209:["Columbus: The Grand Voyage",1992],210:["On Solid Ground",1992,2,"2022 airing"],211:["The Mortal Coil, Part 1 of 2",1992],212:["The Mortal Coil, Part 2 of 2",1992],213:["Best Intentions",1992],214:["The Living Nativity",1992],215:["Caroling, Caroling",1992],216:["Like Father, Like Son",1993,2,"2022 airing"],217:["Rights, Wrongs, and Reasons",1993,2,"2022 airing"],218:["A Class Act",1993,2,"2022 airing"],219:["Treasures of the Heart",1993],220:["This Is Chad Pearson?",1993],221:["It Is Well",1993,2,"2022 airing"],222:["The Jesus Cloth",1993],223:["Real Time",1993],224:["Greater Love",1993],225:["Count It All Joy",1993],226:["An Adventure in Bethany, Part 1 of 2",1993],227:["An Adventure in Bethany, Part 2 of 2",1993],228:["A Game of Compassion",1993],229:["The Marriage Feast",1993,2,"broadcast version"],230:["Our Father",1993],231:["Hallowed Be Thy Name",1993],232:["Thy Kingdom Come",1993],233:["Thy Will Be Done",1993],234:["Our Daily Bread",1993],235:["Forgive Us as We Forgive",1993],236:["Into Temptation",1993],237:["Deliver Us from Evil",1993],238:["For Thine Is the Kingdom",1993],239:["The Power",1993],240:["And the Glory",1993],241:["Forever...Amen",1993],242:["Hymn Writers",1993],243:["Family Values",1993],244:["The Mysterious Stranger, Part 1 of 2",1993],245:["The Mysterious Stranger, Part 2 of 2",1993],246:["My Fair Bernard",1993],247:["Why Don't You Grow Up?",1993],248:["Terror from the Skies",1993],249:["The Case of the Delinquent Disciples",1993],250:["Pilgrim's Progress Revisited, Part 1 of 2",1993],251:["Pilgrim's Progress Revisited, Part 2 of 2",1993],252:["The Bad Hair Day",1993],253:["A Time for Christmas",1993],254:["Truth, Trivia, and 'Trina",1994],255:["The Boy Who Cried 'Destructo!'",1994],256:["Aloha, Oy!, Part 1 of 3",1994],257:["Aloha, Oy!, Part 2 of 3",1994],258:["Aloha, Oy!, Part 3 of 3",1994],259:["The Potential in Elliot",1994],260:["Naturally, I Assumed...",1994],261:["Afraid, Not!",1994],262:["A Prayer for George Barclay",1994],263:["When Bad Isn't So Good",1994],264:["Making the Grade",1994],265:["War of the Words",1994],266:["It Began with a Rabbit's Foot...",1994],267:["It Ended with a Handshake",1994],268:["Pet Peeves",1994],269:["Fences",1994],270:["The War Hero",1994,2,"2020 airing"],271:["The Secret Keys of Discipline",1994],272:["Two Brothers and Bernard, Part 1 of 2",1994],273:["Two Brothers and Bernard, Part 2 of 2",1994],274:["First-Hand Experience",1994],275:["Second Thoughts",1994],276:["Third Degree",1994],277:["It Happened at Four Corners",1994],278:["The Fifth House on the Left, Part 1 of 2",1994],279:["The Fifth House on the Left, Part 2 of 2",1994],280:["Gone...",1994],281:["...But Not Forgotten",1994],282:["The Fundamentals",1994],283:["A Book by Its Cover",1994],284:["The Election Deception",1994],285:["George Under Pressure",1994],286:["Tom for Mayor, Part 1 of 2",1994],287:["Tom for Mayor, Part 2 of 2",1994],288:["The Twilife Zone",1994],289:["A Call for Reverend Jimmy",1994],290:["A Name, Not a Number, Part 1 of 2",1994],291:["A Name, Not a Number, Part 2 of 2",1994],292:["Siege at Jericho",1994],293:["A Code of Honor",1994],294:["Unto Us a Child Is Born",1994],295:["Soaplessly Devoted",1994],296:["Red Wagons and Pink Flamingos",1995],297:["Blackbeard's Treasure",1995],298:["I Want My B-TV!",1995],299:["The Truth About Zachary",1995],300:["Preacher's Kid",1995,1],301:["The Good, the Bad, and Butch",1995],302:["Share and Share Alike",1995],303:["All the Difference in the World",1995],304:["Saint Paul: The Man from Tarsus",1995],305:["Saint Paul: Set Apart by God",1995],306:["A Victim of Circumstance",1995],307:["Poetry in Slow Motion",1995],308:["Subject Yourself",1995],309:["The Perfect Witness, Part 1 of 3",1995],310:["The Perfect Witness, Part 2 of 3",1995],311:["The Perfect Witness, Part 3 of 3",1995],312:["Rewards in Full",1995],313:["Top This!",1995],314:["The Underground Railroad, Part 1 of 3",1995],315:["The Underground Railroad, Part 2 of 3",1995],316:["The Underground Railroad, Part 3 of 3",1995],317:["B-TV: Envy",1995],318:["A Touch of Healing, Part 1 of 2",1995],319:["A Touch of Healing, Part 2 of 2",1995],320:["Where Is Thy Sting?",1995],321:["Hidden in My Heart",1995,2,"broadcast version"],322:["The Turning Point",1995],323:["A Little Credit, Please",1995],324:["Small Fires, Little Pools",1995],325:["Angels Unaware",1995],326:["Gathering Thunder",1995],327:["Moving Targets",1995],328:["Hard Losses",1995],329:["The Return",1995],330:["The Time Has Come",1995],331:["Checkmate",1995],332:["Another Chance",1995],333:["The Last Resort",1995],334:["The Final Conflict",1995],335:["Love Is in the Air, Part 1 of 2",1995],336:["Love Is in the Air, Part 2 of 2",1995],337:["W-O-R-R-Y",1995,2,"broadcast version"],338:["Easy Money",1995],339:["Do, for a Change",1995],340:["Pokenberry Falls, R.F.D., Part 1 of 2",1996],341:["Pokenberry Falls, R.F.D., Part 2 of 2",1996],342:["Welcome Home, Mr. Blackgaard",1996],343:["The Pretty Good Samaritan",1996],344:["Letting Go",1996],345:["B-TV: Compassion",1996],346:["Saint Paul: Voyage to Rome",1996],347:["Saint Paul: An Appointment with Caesar",1996],348:["With a Little Help from My Friends",1996],349:["Blessings in Disguise",1996],350:["The Time of Our Lives",1996],351:["What Are You Gonna Do with Your Life?",1996],352:["Memories of Jerry",1996],353:["A Question About Tasha",1996],354:["Blind Justice",1996],355:["The Search for Whit, Part 1 of 3",1996],356:["The Search for Whit, Part 2 of 3",1996],357:["The Search for Whit, Part 3 of 3",1996],358:["The Secret Weapon",1996],359:["The Merchant of Odyssey",1996],360:["Three Funerals and a Wedding, Part 1 of 2",1996],361:["Three Funerals and a Wedding, Part 2 of 2",1996],362:["The Right Choice, Part 1 of 2",1996],363:["The Right Choice, Part 2 of 2",1996],364:["Home, Sweet Home",1996],365:["Clara",1996],366:["Solitary Refinement",1996],367:["The Decision",1996],368:["The Other Woman",1996],369:["It's a Wrap!",1996],370:["Christmas Around the World, Part 1 of 2",1996],371:["Christmas Around the World, Part 2 of 2",1996],372:["For Whom the Wedding Bells Toll, Part 1 of 3",1997],373:["For Whom the Wedding Bells Toll, Part 2 of 3",1997],374:["For Whom the Wedding Bells Toll, Part 3 of 3",1997],375:["The Pushover",1997],376:["Chores No More",1997],377:["Just Say Yes",1997],378:["The Painting",1997],379:["Best Face Forward",1997],380:["The One About Trust, Part 1 of 2",1997],381:["The One About Trust, Part 2 of 2",1997],382:["Viva La Difference",1997],383:["B-TV: Thanks",1997,2,"broadcast version"],384:["Amazing Grace",1997],385:["It's a Pokenberry Christmas, Part 1 of 2",1997],386:["It's a Pokenberry Christmas, Part 2 of 2",1997],387:["New Year's Eve Live!",1998],388:["Leap of Faith",1998],389:["O.T. Action News: Jephthah's Vow",1998],390:["No Bones About It",1998],391:["The Joke's on You",1998],392:["When in Doubt...Pray!",1998,2,"broadcast version"],393:["Wrapped Around Your Finger",1998],394:["Saint Patrick: A Heart Afire, Part 1 of 2",1998],395:["Saint Patrick: A Heart Afire, Part 2 of 2",1998],396:["Poor Loser",1998],397:["Tornado!",1998],398:["A Case of Revenge",1998],399:["Bernard and Job",1998],400:["The Spy Who Bugged Me",1998,1],401:["More Like Alicia",1998],402:["Arizona Sunrise",1998,2,"broadcast version"],403:["Faster Than a Speeding Ticket",1998],404:["Hide and Seek",1998,2,"broadcast version"],405:["The Graduate",1998],406:["Malachi's Message, Part 1 of 3",1998],407:["Malachi's Message, Part 2 of 3",1998],408:["Malachi's Message, Part 3 of 3",1998],409:["Natural Born Leader",1998],410:["B-TV: Forgiveness",1998],411:["In All Things Give Thanks",1998],412:["A Lesson from Mike",1998],413:["The Devil Made Me Do It",1999],414:["Buried Sin",1999],415:["Gloobers!",1999],416:["The Tower",1999],417:["Not-So-Trivial Pursuits",1999],418:["Opening Day",1999],419:["Another Man's Shoes",1999],420:["Telemachus, Part 1 of 2",1999],421:["Telemachus, Part 2 of 2",1999],422:["Passages: Fletcher's Rebellion, Part 1 of 2",1999],423:["Passages: Fletcher's Rebellion, Part 2 of 2",1999],424:["Blackgaard's Revenge, Part 1 of 2",1999],425:["Blackgaard's Revenge, Part 2 of 2",1999],426:["The Buck Starts Here",1999],427:["Something Cliqued Between Us",1999],428:["The Eternal Birthday & Bethany's Imaginary Friend",1999],429:["The YAK Problem",1999],430:["Blind Girl's Bluff",1999],431:["Where There's Smoke & The Virtual Kid",1999],432:["You Win Some, You Lose Some",1999],433:["The Treasure Room & Chain Reaction",1999],434:["B-TV: Redeeming the Season",2000],435:["A Look Back, Part 1 of 2",2000],436:["A Look Back, Part 2 of 2",2000],437:["Sunset Bowlawater & The Long Way Home",2000],438:["A Lyin' Tale",2000],439:["Terror in the Tuna Factory & Sounds Like a Mystery",2000],440:["I Slap Floor",2000],441:["What Do You Think? & Idol Minds",2000],442:["Two Roads & Sticks and Stones",2000],443:["Changing Rodney",2000],444:["The Bad Guy & Bethany's Flood",2000],445:["No Boundaries",2000],446:["A Matter of Manners & The Seven Deadly Dwarves",2000],447:["Potlucks & Poetry",2000],448:["Mandy's Debut",2000],449:["The Big Deal, Part 1 of 2",2000],450:["The Big Deal, Part 2 of 2",2000],451:["Life Trials of the Rich and Famous",2000],452:["Missionary: Impossible",2000],453:["The Great Wishy Woz, Part 1 of 2",2000],454:["The Great Wishy Woz, Part 2 of 2",2000],455:["Best Laid Plans",2000],456:["Worst Day Ever",2000],457:["Opportunity Knocks",2000],458:["Red Herring",2000],459:["Slumber Party",2000],460:["Nova Rising",2001],461:["B-TV: Obedience",2001],462:["The W.E.",2001],463:["Green Eyes and Yellow Tulips",2001],464:["The Triangle, Part 1 of 2",2001],465:["The Triangle, Part 2 of 2",2001],466:["Snow Day",2001,2,"broadcast version"],467:["Broken Window",2001],468:["Chains, Part 1 of 2",2001],469:["Chains, Part 2 of 2",2001],470:["Break a Leg",2001],471:["Fifteen Minutes",2001],472:["Welcoming Wooton",2001,2,"broadcast version"],473:["Breaking Point",2001],474:["Shining Armor, Part 1 of 2",2001],475:["Shining Armor, Part 2 of 2",2001],476:["Relatively Annoying",2001,2,"broadcast version"],477:["O.T. Action News: Battle at the Kishon",2001],478:["Strange Boy in a Strange Land",2001],479:["Happy Smilers!",2001],480:["The Popsicle Kid",2001],481:["Grand Opening, Part 1 of 2",2002],482:["Grand Opening, Part 2 of 2",2002],483:["Secrets",2002],484:["Plan B, Part 1 of 4: Missing in Action",2002],485:["Plan B, Part 2 of 4: Collision Course",2002],486:["Plan B, Part 3 of 4: Cross-Fire",2002],487:["Plan B, Part 4 of 4: Resistance",2002],488:["Under the Influence, Part 1 of 2",2002],489:["Under the Influence, Part 2 of 2",2002],490:["The Black Veil, Part 1 of 2",2002],491:["The Black Veil, Part 2 of 2",2002],492:["Twisting Pathway",2002],493:["Sheep's Clothing",2002],494:["Box of Miracles",2002],495:["The Unraveling",2002],496:["Exceptional Circumstances",2002],497:["Expect the Worst",2002],498:["Exactly As Planned",2002],499:["Exit",2002],500:["#500",2002,1],501:["Inside the Studio",2002]};
+var EPISODES={};
+(function(){
+  for(var k in _E){
+    var e=_E[k],o={t:e[0],y:e[1]};
+    if(e[2]===1)o.m=true;
+    else if(e[2]===2){o.b="alt";o.bt=e[3];}
+    EPISODES[k]=o;
+  }
+})();
+
+const ALBUMS = [
+  {num:1,title:"The Adventure Begins",eps:[1,2,3,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19]},
+  {num:2,title:"The Wildest Summer Ever",eps:[20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36]},
+  {num:3,title:"Heroes",eps:[37,38,39,40,41,42,43,44,46,47,48,49,50]},
+  {num:4,title:"FUNdamentals",eps:[51,52,53,54,56,57,58,59,60,61,62,63,64]},
+  {num:5,title:"Daring Deeds, Sinister Schemes",eps:[65,66,67,68,69,70,71,72,73,74,75,76]},
+  {num:6,title:"Mission: Accomplished",eps:[77,78,79,80,81,82,83,84,85,86,87,88]},
+  {num:7,title:"On Thin Ice",eps:[89,90,91,92,93,94,95,96,97,98,99,100]},
+  {num:8,title:"Beyond Expectations",eps:[101,102,103,104,105,106,107,108,109,110,111,112,113]},
+  {num:9,title:"Just in Time",eps:[114,115,116,117,118,119,120,121,122,123,124,125]},
+  {num:10,title:"Other Times, Other Places",eps:[126,127,128,129,130,131,132,133,135,136,137,138]},
+  {num:11,title:"It's Another Fine Day...",eps:[139,140,141,142,143,144,145,146,147,148,149,150]},
+  {num:12,title:"At Home and Abroad",eps:[151,152,153,154,155,156,157,158,159,160,161,162]},
+  {num:13,title:"It All Started When...",eps:[163,164,165,166,168,169,170,171,172,173,174,176,177,178]},
+  {num:14,title:"Meanwhile, in Another Part of Town",eps:[179,180,181,182,183,184,185,186,187,188,189,190,191,192]},
+  {num:15,title:"A Place of Wonder",eps:[193,194,195,196,197,198,199,200,201,202,203,204,205]},
+  {num:16,title:"Flights of Imagination",eps:[206,207,208,209,210,211,212,213,214,215,216,217]},
+  {num:17,title:"On Earth As It Is in Heaven",eps:[218,219,220,221,222,223,224,225,226,227,228,229]},
+  {num:18,title:"A Time of Discovery",eps:[222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249]},
+  {num:19,title:"Passport to Adventure",eps:[250,251,252,253,254,255,256,257,258,259,260,261,262]},
+  {num:20,title:"A Journey of Choices",eps:[256,257,258,259,260,261,262,263,264,265,266,267,268,269,270]},
+  {num:21,title:"Wish You Were Here!",eps:[271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287]},
+  {num:22,title:"The Changing Times",eps:[288,289,290,291,292,293,294,295,296,297,298,299,300]},
+  {num:23,title:"Twists and Turns",eps:[301,302,303,304,305,306,307,308,309,310,311,312]},
+  {num:24,title:"Risks and Rewards",eps:[313,314,315,316,317,318,319,320,321,322,323,324]},
+  {num:25,title:"Darkness Before Dawn",eps:[325,326,327,328,329,330,331,332,333,334,335,336]},
+  {num:26,title:"Back on the Air",eps:[337,338,339,340,341,342,343,344,345,346,347,348]},
+  {num:27,title:"The Search for Whit",eps:[349,350,351,352,353,354,355,356,357,358,359,360]},
+  {num:28,title:"Welcome Home!",eps:[361,362,363,364,365,366,367,368,369,370,371]},
+  {num:29,title:"Signed, Sealed, and Committed",eps:[372,373,374,375,376,377,378,379,380,381,382,383,384,385,386]},
+  {num:30,title:"Through Thick and Thin",eps:[387,388,389,390,391,392,393,394,395,396,397,398,399,400]},
+  {num:31,title:"Days to Remember",eps:[401,402,403,404,405,406,407,408,409,410,411,412]},
+  {num:32,title:"Hidden Treasures",eps:[413,414,415,416,417,418,419,420,421,422,423]},
+  {num:33,title:"Virtual Realities",eps:[424,425,426,427,428,429,430,431,432,433,434,435,436]},
+  {num:34,title:"In Your Wildest Dreams",eps:[434,435,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450]},
+  {num:35,title:"The Big Picture",eps:[451,452,453,454,455,456,457,458,459,460,461,462,463]},
+  {num:36,title:"Danger Signals",eps:[464,465,466,467,468,469,470,471,472,473,474,475]},
+  {num:37,title:"Countermoves",eps:[476,477,478,479,480,481,482,483,484,485,486,487]},
+  {num:38,title:"Battle Lines",eps:[488,489,490,491,492,493,494,495,496,497,498,499,500,501]}
+];
+const YEAR_META = {
+  1987:{tag:"The adventure begins"},
+  1988:{tag:"Lost classics and early adventures"},
+  1989:{tag:"Daring deeds, sinister schemes"},
+  1990:{tag:"Beyond expectations — Ep. 100!"},
+  1991:{tag:"Another fine day in Odyssey"},
+  1992:{tag:"Flights of imagination"},
+  1993:{tag:"Passport to adventure — Ep. 200!"},
+  1994:{tag:"A journey of choices"},
+  1995:{tag:"Darkness before dawn — Ep. 300!"},
+  1996:{tag:"The search for Whit"},
+  1997:{tag:"Signed, sealed, and committed"},
+  1998:{tag:"Through thick and thin — Ep. 400!"},
+  1999:{tag:"Virtual realities"},
+  2000:{tag:"The big picture"},
+  2001:{tag:"Danger signals"},
+  2002:{tag:"Battle lines — Ep. 499"}
+};
+function _d(v){if(!v)return null;var t=v[0],r=v.slice(1);if(t=="S")return "https://cdn.subsplash.com/audios/FMDDCD/"+r+"/audio.mp3";if(t=="C")return "https://dru9izvdrxecb.cloudfront.net/episodes/"+r+".m4a";if(t=="A"){var p=r.indexOf("|");return "https://archive.org/download/"+r.slice(0,p)+"/"+r.slice(p+1);}if(t=="F")return "https://www.focusonthefamily.com/wp-content/uploads/"+r;return v;}
+var URLS={};(function(){for(var k in _U)URLS[k]=_d(_U[k]);})();
+function albumArt(n){return 'https://www.odysseyscoop.com/images/merchandise/Album'+n+'B-large-front.jpg';}
+var mode='year',searchQ='',currentOpen=null,renderedSections={};
+
+function cleanUrl(u){return u&&u.indexOf('cloudfront.net')>-1&&u.indexOf('?')>-1?u.split('?')[0]:u;}
+
+function epHTML(n){
+  var ep=EPISODES[n]; if(!ep) return '';
+  var url=cleanUrl(URLS[n]),hasAudio=!!url,isArchive=url&&url.indexOf('archive.org')>-1;
+  var badge='';
+  if(ep.m) badge='<span class="ep-badge badge-milestone">Ep.'+n+'</span>';
+  else if(ep.b==='alt') badge='<span class="ep-badge badge-alt">'+ep.bt+'</span>';
+  var playIcon=hasAudio?'<div class="play-tri"></div><div class="pause-icon"><div class="pause-bar"></div><div class="pause-bar"></div></div>':'<span class="dash-icon">-</span>';
+  var srcNote=isArchive?' (Archive.org)':'';
+  var player=hasAudio
+    ?'<div class="ep-player"><div class="audio-wrap"><span class="audio-src-label">Official audio'+srcNote+'</span><audio id="aud-'+n+'" controls preload="none" data-src="'+url+'"></audio><a class="fallback-link" href="'+url+'" target="_blank" rel="noopener">Open in new tab</a></div></div>'
+    :'<div class="ep-player"><p class="no-audio-msg">No official audio link available.</p></div>';
+  var hidden=searchQ&&ep.t.toLowerCase().indexOf(searchQ)===-1&&String(n).indexOf(searchQ)===-1?' hidden':'';
+  return '<div class="ep-card'+(hasAudio?'':' no-audio')+hidden+'" id="ep-'+n+'" data-t="'+ep.t.toLowerCase()+'" data-n="'+n+'">'
+    +'<div class="ep-top" onclick="toggleEp('+n+')">'
+    +'<div class="ep-play-btn">'+playIcon+'</div>'
+    +'<div class="ep-info"><div class="ep-row1"><span class="ep-num'+(ep.m?' milestone':'')+'">'
+    +n+'</span><span class="ep-title">'+ep.t+'</span></div></div>'
+    +'<div class="ep-right">'+badge+'<span class="ep-chevron">v</span></div>'
+    +'</div>'+player+'</div>';
+}
+
+function getYears(){
+  var years=[],keys=Object.keys(EPISODES);
+  for(var i=0;i<keys.length;i++){var y=EPISODES[keys[i]].y;if(years.indexOf(y)===-1)years.push(y);}
+  return years.sort(function(a,b){return a-b;});
+}
+
+// Lazy: render section content only when expanded/clicked
+function renderYearSection(yr){
+  var meta=YEAR_META[yr]||{},nums=[],k;
+  for(k in EPISODES){if(EPISODES[k].y===yr)nums.push(parseInt(k));}
+  nums.sort(function(a,b){return a-b;});
+  var rows='';
+  for(var ni=0;ni<nums.length;ni++) rows+=epHTML(nums[ni]);
+  return rows;
+}
+
+function renderAlbumSection(alb){
+  var availNums=[],rows='';
+  for(var ei=0;ei<alb.eps.length;ei++){if(EPISODES[alb.eps[ei]])availNums.push(alb.eps[ei]);}
+  for(var ni=0;ni<availNums.length;ni++) rows+=epHTML(availNums[ni]);
+  return rows;
+}
+
+function expandSection(id){
+  var list=document.getElementById('list-'+id);
+  if(!list||renderedSections[id]) return;
+  renderedSections[id]=true;
+  if(mode==='year'){
+    list.innerHTML=renderYearSection(parseInt(id.replace('yr-','')));
+  } else {
+    var albNum=parseInt(id.replace('alb-',''));
+    for(var ai=0;ai<ALBUMS.length;ai++){
+      if(ALBUMS[ai].num===albNum){list.innerHTML=renderAlbumSection(ALBUMS[ai]);break;}
+    }
+  }
+}
+
+function renderYear(){
+  var years=getYears(),out='';
+  renderedSections={};
+  for(var yi=0;yi<years.length;yi++){
+    var yr=years[yi],meta=YEAR_META[yr]||{},nums=[],k;
+    for(k in EPISODES){if(EPISODES[k].y===yr)nums.push(parseInt(k));}
+    var sectionId='yr-'+yr;
+    // Render first year immediately, rest lazily
+    var rows= yi===0 ? renderYearSection(yr) : '';
+    if(yi===0) renderedSections[sectionId]=true;
+    out+='<div class="year-block" id="'+sectionId+'">'
+      +'<div class="section-head" onclick="expandSection(\''+sectionId+'\')">'
+      +'<span class="section-year">'+yr+'</span>'
+      +'<span class="section-tag">'+(meta.tag||'')+'</span>'
+      +'<span class="section-count">'+nums.length+' eps</span></div>'
+      +'<div class="ep-list" id="list-'+sectionId+'">'+rows+'</div></div>';
+  }
+  return out;
+}
+
+function renderAlbum(){
+  var out='';
+  renderedSections={};
+  for(var ai=0;ai<ALBUMS.length;ai++){
+    var alb=ALBUMS[ai],availNums=[];
+    for(var ei=0;ei<alb.eps.length;ei++){if(EPISODES[alb.eps[ei]])availNums.push(alb.eps[ei]);}
+    var minEp=alb.eps[0],maxEp=alb.eps[alb.eps.length-1];
+    var sectionId='alb-'+alb.num;
+    out+='<div class="album-block" id="'+sectionId+'">'
+      +'<div class="album-header" onclick="toggleAlbum('+alb.num+')">'
+      +'<img class="album-art" src="'+albumArt(alb.num)+'" alt="Album '+alb.num+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+      +'<div class="album-art-placeholder" style="display:none">'+alb.num+'</div>'
+      +'<div class="album-info"><div class="album-num-badge">Album '+alb.num+'</div>'
+      +'<div class="album-title-text">'+alb.title+'</div>'
+      +'<div class="album-meta">Ep. '+minEp+'-'+maxEp+'</div></div>'
+      +'<div class="album-right"><span class="album-ep-count">'+availNums.length+' eps</span>'
+      +'<span class="album-chevron">v</span></div></div>'
+      +'<div class="album-eps"><div class="ep-list" id="list-'+sectionId+'"></div></div></div>';
+  }
+  return out;
+}
+
+function buildJumpBar(){
+  var bar=document.getElementById('jumpBar'),html='';
+  if(mode==='year'){
+    var years=getYears();
+    for(var i=0;i<years.length;i++) html+='<button class="jump-btn" onclick="jumpToSection(\'yr-'+years[i]+'\')">'+years[i]+'</button>';
+  } else {
+    for(var ai=0;ai<ALBUMS.length;ai++) html+='<button class="jump-btn" onclick="jumpToSection(\'alb-'+ALBUMS[ai].num+'\')">Album '+ALBUMS[ai].num+'</button>';
+  }
+  bar.innerHTML=html;
+}
+
+function jumpToSection(id){
+  expandSection(id);
+  var el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function toggleAlbum(num){
+  var el=document.getElementById('alb-'+num);
+  if(!el) return;
+  var sectionId='alb-'+num;
+  expandSection(sectionId);
+  el.classList.toggle('open');
+}
+
+function toggleEp(n){
+  var card=document.getElementById('ep-'+n);
+  if(!card) return;
+  var isOpen=card.classList.contains('open');
+  if(currentOpen&&currentOpen!==n){
+    var prev=document.getElementById('ep-'+currentOpen);
+    var prevAud=document.getElementById('aud-'+currentOpen);
+    if(prev){prev.classList.remove('open');prev.classList.remove('playing');}
+    if(prevAud){prevAud.pause();prevAud.removeAttribute('src');}
+  }
+  if(isOpen){
+    card.classList.remove('open');card.classList.remove('playing');
+    var aud=document.getElementById('aud-'+n);
+    if(aud){aud.pause();aud.removeAttribute('src');}
+    currentOpen=null;
+  } else {
+    card.classList.add('open');
+    currentOpen=n;
+    var aud=document.getElementById('aud-'+n);
+    if(aud&&aud.getAttribute('data-src')){
+      aud.src=aud.getAttribute('data-src');
+      aud.play().then(function(){card.classList.add('playing');}).catch(function(){card.classList.remove('playing');});
+    }
+  }
+}
+
+document.addEventListener('play',function(e){if(e.target.tagName==='AUDIO'){var el=document.getElementById('ep-'+e.target.id.replace('aud-',''));if(el)el.classList.add('playing');}},true);
+document.addEventListener('pause',function(e){if(e.target.tagName==='AUDIO'){var el=document.getElementById('ep-'+e.target.id.replace('aud-',''));if(el)el.classList.remove('playing');}},true);
+document.addEventListener('ended',function(e){if(e.target.tagName==='AUDIO'){var el=document.getElementById('ep-'+e.target.id.replace('aud-',''));if(el)el.classList.remove('playing');}},true);
+
+document.getElementById('searchIn').addEventListener('input',function(e){
+  searchQ=e.target.value.toLowerCase().trim();
+  if(searchQ){
+    // Render all sections so search can find everything
+    var years=getYears();
+    for(var yi=0;yi<years.length;yi++){var sid='yr-'+years[yi];if(!renderedSections[sid])expandSection(sid);}
+    for(var ai=0;ai<ALBUMS.length;ai++){var sid='alb-'+ALBUMS[ai].num;if(!renderedSections[sid])expandSection(sid);}
+  }
+  var cards=document.querySelectorAll('.ep-card');
+  for(var i=0;i<cards.length;i++){
+    var c=cards[i];
+    c.classList.toggle('hidden',!!searchQ&&c.getAttribute('data-t').indexOf(searchQ)===-1&&c.getAttribute('data-n').indexOf(searchQ)===-1);
+  }
+  if(mode==='album'&&searchQ){
+    for(var ai=0;ai<ALBUMS.length;ai++){
+      var blk=document.getElementById('alb-'+ALBUMS[ai].num);
+      if(blk&&blk.querySelector('.ep-card:not(.hidden)'))blk.classList.add('open');
+    }
+  }
+  updateCount();
+});
+
+document.getElementById('modeYear').addEventListener('click',function(){
+  if(mode==='year') return; mode='year';
+  document.getElementById('modeYear').classList.add('active');
+  document.getElementById('modeAlbum').classList.remove('active');
+  stopAudio(); render();
+});
+document.getElementById('modeAlbum').addEventListener('click',function(){
+  if(mode==='album') return; mode='album';
+  document.getElementById('modeAlbum').classList.add('active');
+  document.getElementById('modeYear').classList.remove('active');
+  stopAudio(); render();
+});
+
+function stopAudio(){if(currentOpen){var a=document.getElementById('aud-'+currentOpen);if(a){a.pause();a.removeAttribute('src');}currentOpen=null;}}
+
+function updateCount(){
+  var vis=document.querySelectorAll('.ep-card:not(.hidden)').length;
+  var tot=Object.keys(EPISODES).length;
+  document.getElementById('searchCount').innerHTML=searchQ?'Showing <strong>'+vis+'</strong> of '+tot+' episodes':'<strong>'+tot+'</strong> episodes 1987-2002';
+}
+
+function render(){
+  document.getElementById('mainContent').innerHTML=mode==='year'?renderYear():renderAlbum();
+  buildJumpBar();
+  updateCount();
+}
+
+var backBtn=document.getElementById('backTop');
+window.addEventListener('scroll',function(){backBtn.classList.toggle('visible',window.pageYOffset>400);});
+backBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+render();
+</script>
+</body>
+</html>
