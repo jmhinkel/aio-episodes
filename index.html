@@ -85,6 +85,20 @@ h1 em{font-style:italic;color:var(--gold2)}
 .mode-btn:hover:not([aria-pressed="true"]){color:var(--text2)}
 
 /* JUMP BAR */
+.filter-btn{border:1px solid var(--border);flex-shrink:0}
+.filter-btn[aria-pressed="true"]{background:var(--gold-bg);color:var(--gold2);border-color:rgba(212,168,67,0.25)}
+
+/* CONTINUE LISTENING */
+.resume-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.resume-btn{display:inline-flex;align-items:center;gap:8px;max-width:100%;background:var(--bg3);border:1px solid rgba(212,168,67,0.28);border-radius:8px;padding:7px 12px;color:var(--text);font-family:var(--font-body);font-size:13px;cursor:pointer;transition:all .15s;min-width:0}
+.resume-btn:hover{border-color:var(--gold);background:var(--bg4)}
+.resume-tri{width:0;height:0;border-style:solid;border-width:4.5px 0 4.5px 8px;border-color:transparent transparent transparent var(--gold2);flex-shrink:0}
+.resume-label{color:var(--text3);font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;flex-shrink:0}
+.resume-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.resume-at{color:var(--text3);font-size:12px;font-variant-numeric:tabular-nums;flex-shrink:0}
+.resume-clear{background:none;border:none;color:var(--text3);font-family:var(--font-body);font-size:12px;cursor:pointer;padding:4px 2px;text-decoration:underline;text-underline-offset:2px}
+.resume-clear:hover{color:var(--red)}
+
 .jump-bar{max-width:820px;margin:0 auto;padding:0 1.5rem 1.5rem;display:flex;flex-wrap:wrap;gap:5px}
 .jump-btn{font-size:12px;font-weight:600;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;transition:all .15s;font-family:var(--font-body)}
 .jump-btn:hover{border-color:var(--border2);color:var(--text2)}
@@ -125,7 +139,14 @@ h1 em{font-style:italic;color:var(--gold2)}
 
 /* EP CARDS */
 .ep-list{display:flex;flex-direction:column;gap:2px;padding:4px}
-.ep-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .15s}
+.ep-card{position:relative;background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .15s}
+/* thin bar along the bottom showing how far into a part-played episode you are */
+.ep-prog{position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--gold);opacity:.55;pointer-events:none;transition:width .3s;border-radius:0 2px 2px 0}
+.ep-check{display:none;font-size:10px;color:var(--green);flex-shrink:0;line-height:1}
+.ep-card.played .ep-check{display:inline-block}
+.ep-card.played .ep-title{color:var(--text2)}
+.ep-card.played .ep-num{color:var(--text3)}
+.ep-card.played:not(:hover){opacity:.72}
 .ep-card:hover{border-color:var(--border2)}
 .ep-card.playing{border-color:rgba(212,168,67,0.45);background:var(--bg3)}
 .ep-card.hidden{display:none}
@@ -239,8 +260,18 @@ body.player-open .back-top{bottom:110px}
       <button class="mode-btn" id="modeYear" type="button" aria-pressed="true">Year</button>
       <button class="mode-btn" id="modeAlbum" type="button" aria-pressed="false">Album</button>
     </div>
+    <button class="mode-btn filter-btn" id="hidePlayedBtn" type="button" aria-pressed="false">Hide played</button>
   </div>
   <div class="search-count" id="searchCount" role="status" aria-live="polite"></div>
+  <div class="resume-row" id="resumeRow" hidden>
+    <button class="resume-btn" id="resumeBtn" type="button">
+      <span class="resume-tri" aria-hidden="true"></span>
+      <span class="resume-label">Continue</span>
+      <span class="resume-title" id="resumeTitle"></span>
+      <span class="resume-at" id="resumeAt"></span>
+    </button>
+    <button class="resume-clear" id="resetProgBtn" type="button">Reset progress</button>
+  </div>
 </div>
 
 <nav class="jump-bar" id="jumpBar" aria-label="Jump to section"></nav>
@@ -488,8 +519,69 @@ function epsOfYear(yr){
   return nums.sort(function(a,b){return a-b;});
 }
 
+/* ---------- listening progress ----------
+   Per-viewer only: kept in this browser, never leaves it. Every access is
+   guarded because storage can be blocked or full, and the guide has to work
+   exactly the same when it is unavailable. */
+var PROG_KEY='aio-progress',PROGRESS={},hidePlayed=false;
+(function(){ try{ PROGRESS=JSON.parse(localStorage.getItem(PROG_KEY)||'{}')||{}; }catch(e){ PROGRESS={}; } })();
+var progSaveTimer=null;
+function saveProgress(){
+  if(progSaveTimer) return;
+  progSaveTimer=setTimeout(function(){
+    progSaveTimer=null;
+    try{ localStorage.setItem(PROG_KEY,JSON.stringify(PROGRESS)); }catch(e){}
+  },1000);
+}
+function flushProgress(){
+  if(progSaveTimer){ clearTimeout(progSaveTimer); progSaveTimer=null; }
+  try{ localStorage.setItem(PROG_KEY,JSON.stringify(PROGRESS)); }catch(e){}
+}
+function isPlayed(n){ var e=PROGRESS[n]; return !!(e&&e.p); }
+function progPct(n){
+  var e=PROGRESS[n];
+  if(!e||e.p||!e.d||!e.t) return 0;
+  return Math.max(0,Math.min(100,Math.round(e.t/e.d*100)));
+}
+/* 90% in counts as heard - most episodes run credits at the end */
+function noteProgress(n,cur,dur){
+  if(!n||!isFinite(dur)||dur<=0) return;
+  var e=PROGRESS[n]||(PROGRESS[n]={});
+  e.d=Math.round(dur); e.u=Date.now();
+  if(cur/dur>=0.9){ e.p=1; e.t=0; } else { e.t=Math.round(cur); delete e.p; }
+  saveProgress(); syncProgress(n); updateResume();
+}
+function markPlayed(n,played){
+  var e=PROGRESS[n]||(PROGRESS[n]={});
+  if(played){ e.p=1; e.t=0; } else { delete e.p; e.t=0; }
+  e.u=Date.now();
+  flushProgress(); syncProgress(n); updateResume(); updateCount();
+}
+function playedCount(){ var c=0,k; for(k in PROGRESS) if(PROGRESS[k].p&&EPISODES[k]) c++; return c; }
+function syncProgress(n){
+  var c=document.getElementById('ep-'+n); if(!c) return;
+  c.classList.toggle('played',isPlayed(n));
+  var pct=progPct(n),bar=c.querySelector('.ep-prog');
+  if(bar) bar.style.width=pct+'%';
+}
+function syncAllProgress(){
+  var cards=document.querySelectorAll('.ep-card');
+  for(var i=0;i<cards.length;i++) syncProgress(parseInt(cards[i].id.slice(3),10));
+}
+/* most recently touched episode that was started but not finished */
+function resumeCandidate(){
+  var best=null,k;
+  for(k in PROGRESS){
+    var e=PROGRESS[k];
+    if(!e||e.p||!e.t||e.t<30||!EPISODES[k]||!URLS[k]) continue;
+    if(!best||(e.u||0)>(PROGRESS[best].u||0)) best=k;
+  }
+  return best?parseInt(best,10):null;
+}
+
 /* ---------- search ---------- */
 function matches(n){
+  if(hidePlayed&&isPlayed(n)) return false;
   if(!searchQ) return true;
   var ep=EPISODES[n]; if(!ep) return false;
   if(String(n).indexOf(searchQ)>-1) return true;
@@ -536,10 +628,11 @@ function epHTML(n){
     +'<span class="sr-only">'+(hasAudio?'Play episode ':'Audio unavailable, episode ')+'</span>'
     +'<span class="ep-play-btn" aria-hidden="true">'+icon+'</span>'
     +'<span class="ep-info"><span class="ep-row1">'
+    +'<span class="ep-check" aria-hidden="true">✓</span>'
     +'<span class="ep-num'+(ep.m?' milestone':'')+'">'+n+'</span>'
     +'<span class="ep-title">'+esc(ep.t)+'</span></span></span>'
     +'<span class="ep-right">'+badge+'</span>'
-    +'</button></div>';
+    +'</button><span class="ep-prog" aria-hidden="true"></span></div>';
 }
 
 function renderRows(nums){
@@ -643,7 +736,7 @@ function jumpToSection(id){
 /* ---------- player ---------- */
 var audio=new Audio();
 audio.preload='metadata';
-var currentEp=null,seeking=false;
+var currentEp=null,seeking=false,pendingSeek=0,lastNoted=0;
 var SPEEDS=[1,1.25,1.5,1.75,2],speedIdx=0;
 
 var P={
@@ -682,10 +775,13 @@ function sourceLabel(url){
   try{ return new URL(url).hostname.replace(/^www\./,''); }catch(e){ return 'External source'; }
 }
 
-function playEp(n){
+function playEp(n,fromStart){
   if(!URLS[n]) return;
   if(currentEp===n){ togglePlay(); return; }
   var url=cleanUrl(URLS[n]),ep=EPISODES[n];
+  if(currentEp!=null&&isFinite(audio.duration)) noteProgress(currentEp,audio.currentTime,audio.duration);
+  var e=PROGRESS[n];
+  pendingSeek=(!fromStart&&e&&!e.p&&e.t>30)?e.t:0;
   currentEp=n;
   P.bar.classList.remove('errored');
   P.bar.classList.add('active');
@@ -754,15 +850,34 @@ function updateMediaSession(){
 audio.addEventListener('loadedmetadata',function(){
   P.dur.textContent=fmtTime(audio.duration);
   P.seek.disabled=!isFinite(audio.duration);
+  if(pendingSeek>0&&isFinite(audio.duration)&&pendingSeek<audio.duration-15){
+    try{ audio.currentTime=pendingSeek; }catch(e){}
+  }
+  pendingSeek=0;
 });
 audio.addEventListener('timeupdate',function(){
   P.cur.textContent=fmtTime(audio.currentTime);
   if(!seeking&&isFinite(audio.duration)&&audio.duration>0)
     P.seek.value=Math.round(audio.currentTime/audio.duration*1000);
+  // record position at most once every 5s
+  if(currentEp!=null&&!audio.paused&&isFinite(audio.duration)&&Date.now()-lastNoted>5000){
+    lastNoted=Date.now();
+    noteProgress(currentEp,audio.currentTime,audio.duration);
+  }
 });
 audio.addEventListener('play',function(){ syncPlayBtn(); syncCards(); });
-audio.addEventListener('pause',function(){ syncPlayBtn(); syncCards(); });
-audio.addEventListener('ended',function(){ step(1); });
+audio.addEventListener('pause',function(){
+  syncPlayBtn(); syncCards();
+  if(currentEp!=null&&isFinite(audio.duration)) noteProgress(currentEp,audio.currentTime,audio.duration);
+});
+audio.addEventListener('ended',function(){
+  if(currentEp!=null){ markPlayed(currentEp,true); }
+  step(1);
+});
+window.addEventListener('pagehide',function(){
+  if(currentEp!=null&&isFinite(audio.duration)) noteProgress(currentEp,audio.currentTime,audio.duration);
+  flushProgress();
+});
 audio.addEventListener('error',function(){
   if(currentEp==null) return;
   P.bar.classList.add('errored');
@@ -802,7 +917,7 @@ document.getElementById('jumpBar').addEventListener('click',function(e){
 /* ---------- search ---------- */
 function applyFilter(){
   var years,i;
-  if(searchQ){
+  if(searchQ||hidePlayed){
     if(mode==='year'){ years=getYears(); for(i=0;i<years.length;i++) expandSection('yr-'+years[i]); }
     else { for(i=0;i<GROUPS.length;i++) expandSection('alb-'+i); }
   }
@@ -812,10 +927,11 @@ function applyFilter(){
     cards[i].classList.toggle('hidden',!ok);
     if(ok) shown++;
   }
+  var filtering=!!searchQ||hidePlayed;
   var blocks=document.querySelectorAll('.year-block, .album-block');
   for(i=0;i<blocks.length;i++){
     var b=blocks[i],hit=b.querySelector('.ep-card:not(.hidden)');
-    if(searchQ){
+    if(filtering){
       b.style.display=hit?'':'none';
       setOpen(b.id,!!hit);
     } else {
@@ -823,17 +939,45 @@ function applyFilter(){
       if(mode==='album') setOpen(b.id,false);
     }
   }
-  document.getElementById('mainContent').classList.toggle('is-empty',searchQ&&shown===0);
+  document.getElementById('mainContent').classList.toggle('is-empty',filtering&&shown===0);
   updateCount(shown);
   updateNavButtons();
+  syncAllProgress();
 }
 
 function updateCount(shown){
   var tot=Object.keys(EPISODES).length,el=document.getElementById('searchCount');
-  el.innerHTML=searchQ
-    ?'Showing <strong>'+shown+'</strong> of '+tot+' episodes'
-    :'<strong>'+tot+'</strong> episodes · '+YEAR_RANGE;
+  var played=playedCount();
+  var tail=played?' · <strong>'+played+'</strong> played':'';
+  if(shown===undefined) shown=document.querySelectorAll('.ep-card:not(.hidden)').length;
+  el.innerHTML=(searchQ||hidePlayed)
+    ?'Showing <strong>'+shown+'</strong> of '+tot+' episodes'+tail
+    :'<strong>'+tot+'</strong> episodes · '+YEAR_RANGE+tail;
 }
+
+/* ---------- continue listening ---------- */
+function updateResume(){
+  var row=document.getElementById('resumeRow'),n=resumeCandidate();
+  if(n==null){ row.hidden=true; row.dataset.ep=''; return; }
+  row.hidden=false; row.dataset.ep=n;
+  document.getElementById('resumeTitle').textContent='#'+n+' '+EPISODES[n].t;
+  var e=PROGRESS[n];
+  document.getElementById('resumeAt').textContent=fmtTime(e.t)+(e.d?' / '+fmtTime(e.d):'');
+}
+document.getElementById('resumeBtn').addEventListener('click',function(){
+  var n=parseInt(document.getElementById('resumeRow').dataset.ep,10);
+  if(!isNaN(n)){ var sid=sectionIdFor(n); if(sid) expandSection(sid); playEp(n); }
+});
+document.getElementById('resetProgBtn').addEventListener('click',function(){
+  if(!confirm('Clear listening history for all episodes on this device?')) return;
+  PROGRESS={}; flushProgress();
+  syncAllProgress(); updateResume(); applyFilter();
+});
+document.getElementById('hidePlayedBtn').addEventListener('click',function(){
+  hidePlayed=!hidePlayed;
+  this.setAttribute('aria-pressed',hidePlayed?'true':'false');
+  applyFilter();
+});
 
 document.getElementById('searchIn').addEventListener('input',function(e){
   searchQ=e.target.value.toLowerCase().trim();
@@ -885,6 +1029,7 @@ backBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smo
 renderHero();
 render();
 syncPlayBtn();
+updateResume();
 </script>
 </body>
 </html>
