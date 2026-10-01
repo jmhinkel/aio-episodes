@@ -210,15 +210,19 @@ h1 em{font-style:italic;color:var(--gold2)}
 .seek:disabled{opacity:.4;cursor:default}
 .time{font-size:11px;color:var(--text3);font-variant-numeric:tabular-nums;min-width:36px;flex-shrink:0}
 .time.right{text-align:right}
+.player-summary{font-size:11.5px;color:var(--text2);line-height:1.4;margin-top:3px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.player-summary[hidden]{display:none}
 .player-err{font-size:11.5px;color:var(--red);display:none}
 .player.errored .player-err{display:block}
-body.player-open{padding-bottom:104px}
+/* the bar's height varies with the summary, so reserve space from the measured
+   height rather than a fixed guess */
+body.player-open{padding-bottom:calc(var(--player-h,104px) + 22px)}
 
 /* BACK TOP */
 .back-top{position:fixed;bottom:22px;right:22px;z-index:100;width:38px;height:38px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity .15s,color .15s,border-color .15s,bottom .25s;opacity:0;pointer-events:none}
 .back-top.visible{opacity:1;pointer-events:auto}
 .back-top:hover{color:var(--text);border-color:var(--gold)}
-body.player-open .back-top{bottom:110px}
+body.player-open .back-top{bottom:calc(var(--player-h,104px) + 28px)}
 
 @media(max-width:640px){
   .hero,.controls,.jump-bar,.main{padding-left:1rem;padding-right:1rem}
@@ -230,8 +234,8 @@ body.player-open .back-top{bottom:110px}
   .player-row{flex-wrap:wrap}
   .player-meta{order:-1;flex:1 0 100%}
   .speed-btn{margin-left:auto}
-  body.player-open{padding-bottom:136px}
-  body.player-open .back-top{bottom:142px}
+  /* one line of summary on a phone; the bar is already a big slice of screen */
+  .player-summary{-webkit-line-clamp:1}
 }
 </style>
 </head>
@@ -297,6 +301,7 @@ body.player-open .back-top{bottom:110px}
       <div class="player-meta">
         <div class="player-line"><span class="player-num" id="pNum"></span><span class="player-title" id="pTitle"></span></div>
         <div class="player-sub" id="pSub"></div>
+        <div class="player-summary" id="pSummary" hidden></div>
         <div class="player-err" id="pErr">This episode’s audio failed to load.</div>
       </div>
       <button class="pbtn speed-btn" id="pSpeed" type="button" aria-label="Playback speed">1×</button>
@@ -606,6 +611,7 @@ function loadIndex(){
         d._s=((d.s||'')+' '+(d.c||[]).join(' ')+' '+(d.q||[]).join(' ')+' '+(d.t||'')+' '+(d.b||'')).toLowerCase();
       }
       idxState='ready'; updateSearchHint();
+      if(currentEp!=null) setPlayerSummary(currentEp);
       if(searchQ) applyFilter();
     })
     .catch(function(){ idxState='failed'; updateSearchHint(); });
@@ -829,6 +835,23 @@ function syncCards(){
   if(c){ c.classList.add('playing'); if(!audio.paused) c.classList.add('is-playing'); }
 }
 
+/* The summary lives in the lazily-fetched search index, so it may arrive after
+   playback starts; setPlayerSummary is called again when the index lands. */
+function setPlayerSummary(n){
+  var el=document.getElementById('pSummary');
+  if(!el) return;
+  var d=IDX&&IDX[n],s=(d&&d.s)||'';
+  el.textContent=s;
+  el.hidden=!s;
+  syncPlayerSpace();
+}
+/* the bar grows and shrinks with the summary, so measure it */
+function syncPlayerSpace(){
+  var h=Math.round(P.bar.getBoundingClientRect().height);
+  if(h) document.documentElement.style.setProperty('--player-h',h+'px');
+}
+window.addEventListener('resize',syncPlayerSpace);
+
 function syncPlayBtn(){
   var playing=!audio.paused;
   P.play.textContent=playing?'⏸':'▶';
@@ -862,6 +885,8 @@ function playEp(n,fromStart){
   audio.src=url;
   audio.playbackRate=SPEEDS[speedIdx];
   audio.play().catch(function(){ syncPlayBtn(); syncCards(); });
+  loadIndex();                 // the summary comes from the search index
+  setPlayerSummary(n);
   syncPlayBtn(); syncCards(); updateNavButtons(); updateMediaSession();
 }
 
@@ -894,6 +919,8 @@ function closePlayer(){
   currentEp=null;
   P.bar.classList.remove('active','errored');
   document.body.classList.remove('player-open');
+  var sum=document.getElementById('pSummary');
+  if(sum){ sum.textContent=''; sum.hidden=true; }
   syncCards();
 }
 
