@@ -11,7 +11,7 @@
 <meta property="og:title" content="Adventures in Odyssey — Episodes 1–1042">
 <meta property="og:description" content="Browse and listen to Adventures in Odyssey episodes 1 through 1042, grouped by year or by album.">
 <meta property="og:url" content="https://jmhinkel.github.io/aio-episodes/">
-<meta property="og:image" content="https://www.odysseyscoop.com/images/merchandise/Album1B-large-front.jpg">
+<meta property="og:image" content="https://archive.org/services/img/aio-vol01_202601143">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Adventures in Odyssey — Episodes 1–1042">
 <meta name="twitter:description" content="Browse and listen to Adventures in Odyssey episodes 1 through 1042, grouped by year or by album.">
@@ -99,9 +99,14 @@ h1 em{font-style:italic;color:var(--gold2)}
 .resume-clear{background:none;border:none;color:var(--text3);font-family:var(--font-body);font-size:12px;cursor:pointer;padding:4px 2px;text-decoration:underline;text-underline-offset:2px}
 .resume-clear:hover{color:var(--red)}
 
-.jump-bar{max-width:820px;margin:0 auto;padding:0 1.5rem 1.5rem;display:flex;flex-wrap:wrap;gap:5px}
+.jump-bar{max-width:820px;margin:0 auto;padding:0 1.5rem 1.5rem;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.jump-label{font-size:12px;color:var(--text3);font-weight:500;letter-spacing:.03em;text-transform:uppercase;flex-shrink:0}
 .jump-btn{font-size:12px;font-weight:600;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;transition:all .15s;font-family:var(--font-body)}
 .jump-btn:hover{border-color:var(--border2);color:var(--text2)}
+.jump-select{flex:1;min-width:190px;max-width:340px;margin-left:auto;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-family:var(--font-body);font-size:12.5px;padding:5px 10px;cursor:pointer;outline:none;transition:border-color .15s,box-shadow .15s}
+.jump-select:hover{border-color:var(--border2);color:var(--text)}
+.jump-select:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+.jump-select option{background:var(--bg3);color:var(--text)}
 
 /* MAIN */
 .main{max-width:820px;margin:0 auto;padding:0 1.5rem 5rem}
@@ -329,49 +334,49 @@ var EPISODES={};
 })();
 
 const ALBUMS = [
-{num:1,title:"The Adventure Begins",eps:[1,2,4,5,6,7,10,12,17,18,19,27]},
-{num:2,title:"The Wildest Summer Ever",eps:[31,32,33,34,35,36,37,38,39,40,41,42]},
-{num:3,title:"Heroes",eps:[43,46,20,29,48,47,49,50,51,52,53,54]},
-{num:4,title:"FUNdamentals",eps:[56,57,58,59,60,61,62,63,64,65,68,69]},
-{num:5,title:"Daring Deeds, Sinister Schemes",eps:[66,67,73,76,74,75,77,78,79,72,83,84]},
-{num:6,title:"Mission: Accomplished",eps:[92,102,28,89,81,82,80,91,93,86,87,88]},
-{num:7,title:"On Thin Ice",eps:[128,132,95,96,97,98,99,100,101,103,108,104,105]},
-{num:8,title:"Beyond Expectations",eps:[106,107,110,111,112,113,120,121,122,123,124,125,115,138]},
-{num:9,title:"Just in Time",eps:[109,114,118,119,126,127,130,131,133,129,140,141,502]},
-{num:10,title:"Other Times, Other Places",eps:[135,136,137,139,144,145,146,148,155,156,157,159]},
-{num:11,title:"It's Another Fine Day...",eps:[143,147,149,150,151,152,153,154,158,160,165,166]},
-{num:12,title:"At Home and Abroad",eps:[163,168,169,170,171,172,173,174,175,176,177,178]},
-{num:13,title:"It All Started When...",eps:[179,180,181,182,183,184,185,186,187,188,189]},
-{num:14,title:"Meanwhile, in Another Part of Town",eps:[162,164,190,191,193,194,195,196,197,198,200,202,192]},
-{num:15,title:"A Place of Wonder",eps:[199,201,203,204,205,206,207,208,210,217,218,215]},
-{num:16,title:"Flights of Imagination",eps:[211,212,213,209,214,216,221,219,220,228,226,227]},
-{num:17,title:"On Earth As It Is in Heaven",eps:[230,231,232,233,234,235,236,237,238,239,240,241]},
-{num:18,title:"A Time of Discovery",eps:[246,242,224,222,249,229,243,247,248,225,244,245]},
-{num:19,title:"Passport to Adventure",eps:[250,251,252,253,254,260,256,257,258,259,262,255]},
-{num:20,title:"A Journey of Choices",eps:[263,264,269,261,268,265,270,271,272,273,266,267]},
-{num:21,title:"Wish You Were Here!",eps:[274,275,276,277,278,279,280,281,282,284,283,288]},
-{num:22,title:"The Changing Times",eps:[286,287,292,285,290,291,293,289,295,296,297,294]},
-{num:23,title:"Twists and Turns",eps:[298,299,300,301,302,303,304,305,306,309,310,311]},
-{num:24,title:"Risks and Rewards",eps:[307,308,312,313,314,315,316,317,318,319,320,322]},
-{num:25,title:"Darkness Before Dawn",eps:[321,323,324,325,326,327,328,329,330,331,332,333,334]},
-{num:26,title:"Back on the Air",eps:[335,336,337,338,339,340,341,342,343,344,345,346,347,348]},
-{num:27,title:"The Search for Whit",eps:[349,350,351,352,353,354,355,356,357,358,359,360]},
-{num:28,title:"Welcome Home!",eps:[361,362,363,364,365,366,367,368,369,370,371]},
-{num:29,title:"Signed, Sealed, and Committed",eps:[372,373,374,375,376,377,378,379,380,381,382,383,384,385,386]},
-{num:30,title:"Through Thick and Thin",eps:[387,388,389,390,391,392,393,394,395,396,397,398,399,400]},
-{num:31,title:"Days to Remember",eps:[401,402,403,404,405,406,407,408,409,410,411,412]},
-{num:32,title:"Hidden Treasures",eps:[413,414,415,416,417,418,419,420,421,422,423]},
-{num:33,title:"Virtual Realities",eps:[424,425,426,427,428,429,430,431,432,433]},
-{num:34,title:"In Your Wildest Dreams",eps:[437,438,439,440,441,442,443,444,445,446,447,448]},
-{num:35,title:"The Big Picture",eps:[449,450,451,452,453,454,455,456,457,458,459,460]},
-{num:36,title:"Danger Signals",eps:[461,462,463,464,465,466,467,468,469,470,471,472,473]},
-{num:37,title:"Countermoves",eps:[474,475,476,477,478,479,480,481,482,483,484,485,486,487]},
-{num:38,title:"Battle Lines",eps:[488,489,490,491,492,493,494,495,496,497,498,499,500,501]},
-{num:39,title:"Friends, Family and Countrymen",eps:[461,476,480,503,504,505,506,507,508,509,511,512]},
-{num:40,title:"Out of Control",eps:[510,514,515,516,517,518,519,520,522,523,524,525]},
-{num:41,title:"In Hot Pursuit",eps:[513,521,526,527,528,529,530,531,532,533,534,537]},
-{num:42,title:"No Way Out",eps:[535,536,538,539,540,541,542,543,544,545,546,547]},
-{num:43,title:"Along For the Ride",eps:[548,549,550,551,552,553,554,555,556,557,558,559]},
+{num:1,title:"The Adventure Begins",art:"aio-vol01_202601143",eps:[1,2,4,5,6,7,10,12,17,18,19,27]},
+{num:2,title:"The Wildest Summer Ever",art:"aio-vol02_202601143",eps:[31,32,33,34,35,36,37,38,39,40,41,42]},
+{num:3,title:"Heroes",art:"aio-vol03_202601143",eps:[43,46,20,29,48,47,49,50,51,52,53,54]},
+{num:4,title:"FUNdamentals",art:"aio-vol04_202601143",eps:[56,57,58,59,60,61,62,63,64,65,68,69]},
+{num:5,title:"Daring Deeds, Sinister Schemes",art:"aio-vol05_202601143",eps:[66,67,73,76,74,75,77,78,79,72,83,84]},
+{num:6,title:"Mission: Accomplished",art:"aio-vol06_202601143",eps:[92,102,28,89,81,82,80,91,93,86,87,88]},
+{num:7,title:"On Thin Ice",art:"aio-vol07_202601143",eps:[128,132,95,96,97,98,99,100,101,103,108,104,105]},
+{num:8,title:"Beyond Expectations",art:"aio-vol08_202601143",eps:[106,107,110,111,112,113,120,121,122,123,124,125,115,138]},
+{num:9,title:"Just in Time",art:"aio-vol09_202601143",eps:[109,114,118,119,126,127,130,131,133,129,140,141,502]},
+{num:10,title:"Other Times, Other Places",art:"aio-vol10_202601143",eps:[135,136,137,139,144,145,146,148,155,156,157,159]},
+{num:11,title:"It's Another Fine Day...",art:"aio-vol11_202601143",eps:[143,147,149,150,151,152,153,154,158,160,165,166]},
+{num:12,title:"At Home and Abroad",art:"aio-vol12_202601143",eps:[163,168,169,170,171,172,173,174,175,176,177,178]},
+{num:13,title:"It All Started When...",art:"aio-vol13_202601143",eps:[179,180,181,182,183,184,185,186,187,188,189]},
+{num:14,title:"Meanwhile, in Another Part of Town",art:"aio-vol14_202601143",eps:[162,164,190,191,193,194,195,196,197,198,200,202,192]},
+{num:15,title:"A Place of Wonder",art:"aio-vol15_202601143",eps:[199,201,203,204,205,206,207,208,210,217,218,215]},
+{num:16,title:"Flights of Imagination",art:"aio-vol16_202601143",eps:[211,212,213,209,214,216,221,219,220,228,226,227]},
+{num:17,title:"On Earth As It Is in Heaven",art:"aio-vol17_202601143",eps:[230,231,232,233,234,235,236,237,238,239,240,241]},
+{num:18,title:"A Time of Discovery",art:"aio-vol18_202601143",eps:[246,242,224,222,249,229,243,247,248,225,244,245]},
+{num:19,title:"Passport to Adventure",art:"aio-vol19_202601143",eps:[250,251,252,253,254,260,256,257,258,259,262,255]},
+{num:20,title:"A Journey of Choices",art:"aio-vol20_202601143",eps:[263,264,269,261,268,265,270,271,272,273,266,267]},
+{num:21,title:"Wish You Were Here!",art:"aio-vol21_202601143",eps:[274,275,276,277,278,279,280,281,282,284,283,288]},
+{num:22,title:"The Changing Times",art:"aio-vol22_20260508",eps:[286,287,292,285,290,291,293,289,295,296,297,294]},
+{num:23,title:"Twists and Turns",art:"aio-vol23_20260520",eps:[298,299,300,301,302,303,304,305,306,309,310,311]},
+{num:24,title:"Risks and Rewards",art:"aio-vol24_20260914",eps:[307,308,312,313,314,315,316,317,318,319,320,322]},
+{num:25,title:"Darkness Before Dawn",art:"aio-vol25_202601143",eps:[321,323,324,325,326,327,328,329,330,331,332,333,334]},
+{num:26,title:"Back on the Air",art:"aio-vol26_202601143",eps:[335,336,337,338,339,340,341,342,343,344,345,346,347,348]},
+{num:27,title:"The Search for Whit",art:"aio-vol27_20260117",eps:[349,350,351,352,353,354,355,356,357,358,359,360]},
+{num:28,title:"Welcome Home!",art:"aio-vol28_20260630",eps:[361,362,363,364,365,366,367,368,369,370,371]},
+{num:29,title:"Signed, Sealed, and Committed",art:"aio-vol29_20260504",eps:[372,373,374,375,376,377,378,379,380,381,382,383,384,385,386]},
+{num:30,title:"Through Thick and Thin",art:"aio-vol30_202601143",eps:[387,388,389,390,391,392,393,394,395,396,397,398,399,400]},
+{num:31,title:"Days to Remember",art:"aio-vol31_20260508",eps:[401,402,403,404,405,406,407,408,409,410,411,412]},
+{num:32,title:"Hidden Treasures",art:"aio-vol32_20260508",eps:[413,414,415,416,417,418,419,420,421,422,423]},
+{num:33,title:"Virtual Realities",art:"aio-vol33_20260319",eps:[424,425,426,427,428,429,430,431,432,433]},
+{num:34,title:"In Your Wildest Dreams",art:"aio-vol34_20260512",eps:[437,438,439,440,441,442,443,444,445,446,447,448]},
+{num:35,title:"The Big Picture",art:"aio-vol35_20260519",eps:[449,450,451,452,453,454,455,456,457,458,459,460]},
+{num:36,title:"Danger Signals",art:"aio-vol36_20260313",eps:[461,462,463,464,465,466,467,468,469,470,471,472,473]},
+{num:37,title:"Countermoves",art:"aio-vol37_20260310",eps:[474,475,476,477,478,479,480,481,482,483,484,485,486,487]},
+{num:38,title:"Battle Lines",art:"aio-vol38_20260228",eps:[488,489,490,491,492,493,494,495,496,497,498,499,500,501]},
+{num:39,title:"Friends, Family and Countrymen",art:"aio-vol39_20260512",eps:[461,476,480,503,504,505,506,507,508,509,511,512]},
+{num:40,title:"Out of Control",art:"aio-vol40_202601143",eps:[510,514,515,516,517,518,519,520,522,523,524,525]},
+{num:41,title:"In Hot Pursuit",art:"aio-vol41_202601143",eps:[513,521,526,527,528,529,530,531,532,533,534,537]},
+{num:42,title:"No Way Out",art:"aio-vol42_202601143",eps:[535,536,538,539,540,541,542,543,544,545,546,547]},
+{num:43,title:"Along For the Ride",art:"aio-vol43_20260430",eps:[548,549,550,551,552,553,554,555,556,557,558,559]},
 {num:44,title:"Eugene Returns!",art:"aio-vol44_20260319",eps:[560,561,562,563,564,565,566,567,568,569,570,571]},
 {num:45,title:"Lost & Found",art:"aio-vol45_20260131",eps:[572,573,574,575,576,577,578,579,580,581,582,583]},
 {num:46,title:"A Date with Dad (and Other Calamities)",art:"aio-vol46_20260602",eps:[584,585,586,587,588,589,590,591,592,593,594,595]},
@@ -473,13 +478,12 @@ const YEAR_META = {
 };
 function _d(v){if(!v)return null;var t=v[0],r=v.slice(1);if(t=="S")return "https://cdn.subsplash.com/audios/FMDDCD/"+r+"/audio.mp3";if(t=="C")return "https://dru9izvdrxecb.cloudfront.net/episodes/"+r+".m4a";if(t=="A"){var p=r.indexOf("|");return "https://archive.org/download/"+r.slice(0,p)+"/"+r.slice(p+1);}if(t=="V"){var q=r.indexOf("|");return "https://archive.org/serve/"+r.slice(0,q)+"/"+r.slice(q+1);}if(t=="F")return "https://www.focusonthefamily.com/wp-content/uploads/"+r;return v;}
 var URLS={};(function(){for(var k in _U)URLS[k]=_d(_U[k]);})();
-/* Cover art. odysseyscoop only has albums 1-43; every other group carries an
-   `art` field naming the archive.org item its episodes come from, whose
-   thumbnail service returns a uniform ~180px cover. */
+/* Cover art. Every group carries an `art` field naming an archive.org item,
+   whose thumbnail service returns a uniform ~180px cover. (Artwork used to
+   come from odysseyscoop for albums 1-43, but that host's TLS certificate is
+   self-signed, so browsers refuse the images outright.) */
 function albumArt(a){
-  if(a&&a.art) return 'https://archive.org/services/img/'+a.art;
-  if(a&&a.num!==null) return 'https://www.odysseyscoop.com/images/merchandise/Album'+a.num+'B-large-front.jpg';
-  return null;
+  return a&&a.art?'https://archive.org/services/img/'+a.art:null;
 }
 /* Not every group is a numbered album - club seasons and spin-off collections
    have a label instead. */
@@ -773,15 +777,48 @@ function renderAlbum(){
   return out;
 }
 
+/* A wall of 40 years, or 100 bare album numbers, is not scannable - nobody
+   knows album 53 is The Green Ring Conspiracy. So: a few coarse chips for
+   one-click jumps, plus a fully labelled picker for everything else. */
 function buildJumpBar(){
-  var html='',i;
+  var chips='',opts='',i;
   if(mode==='year'){
-    var years=getYears();
-    for(i=0;i<years.length;i++) html+='<button class="jump-btn" type="button" data-jump="yr-'+years[i]+'">'+years[i]+'</button>';
+    var years=getYears(),decades=[];
+    for(i=0;i<years.length;i++){
+      var d=Math.floor(years[i]/10)*10;
+      if(decades.indexOf(d)===-1) decades.push(d);
+    }
+    for(i=0;i<decades.length;i++){
+      var first=null;
+      for(var yi=0;yi<years.length;yi++) if(Math.floor(years[yi]/10)*10===decades[i]){ first=years[yi]; break; }
+      chips+='<button class="jump-btn" type="button" data-jump="yr-'+first+'">'+decades[i]+'s</button>';
+    }
+    for(i=0;i<years.length;i++){
+      var meta=YEAR_META[years[i]]||{},cnt=epsOfYear(years[i]).length;
+      opts+='<option value="yr-'+years[i]+'">'+years[i]+(meta.tag?' — '+esc(meta.tag):'')+' · '+cnt+' eps</option>';
+    }
   } else {
-    for(i=0;i<GROUPS.length;i++) html+='<button class="jump-btn" type="button" data-jump="alb-'+i+'" title="'+esc(GROUPS[i].title)+'">'+(GROUPS[i].num===null?(GROUPS[i].orphan?'★':'●'):GROUPS[i].num)+'</button>';
+    // chips step through the albums in blocks, plus one for the collections
+    var firstUnnumbered=-1;
+    for(i=0;i<GROUPS.length;i++) if(GROUPS[i].num===null&&!GROUPS[i].orphan){ firstUnnumbered=i; break; }
+    var blocks=[[1,20],[21,40],[41,60],[61,82]];
+    for(var b=0;b<blocks.length;b++){
+      var target=-1;
+      for(i=0;i<GROUPS.length;i++) if(GROUPS[i].num>=blocks[b][0]&&GROUPS[i].num<=blocks[b][1]){ target=i; break; }
+      if(target>-1) chips+='<button class="jump-btn" type="button" data-jump="alb-'+target+'">'+blocks[b][0]+'–'+blocks[b][1]+'</button>';
+    }
+    if(firstUnnumbered>-1) chips+='<button class="jump-btn" type="button" data-jump="alb-'+firstUnnumbered+'">Collections</button>';
+    for(i=0;i<GROUPS.length;i++){
+      var g=GROUPS[i],avail=0;
+      for(var e=0;e<g.eps.length;e++) if(EPISODES[g.eps[e]]) avail++;
+      var lbl=(g.num===null?esc(g.title):'Album '+g.num+' — '+esc(g.title))+' · '+avail+' eps';
+      opts+='<option value="alb-'+i+'">'+lbl+'</option>';
+    }
   }
-  document.getElementById('jumpBar').innerHTML=html;
+  document.getElementById('jumpBar').innerHTML=
+    '<span class="jump-label" id="jumpLbl">Jump to</span>'+chips
+    +'<select class="jump-select" id="jumpSelect" aria-labelledby="jumpLbl">'
+    +'<option value="">'+(mode==='year'?'Pick a year…':'Pick an album…')+'</option>'+opts+'</select>';
 }
 
 /* ---------- expand / collapse ---------- */
@@ -1006,6 +1043,11 @@ document.getElementById('mainContent').addEventListener('click',function(e){
 document.getElementById('jumpBar').addEventListener('click',function(e){
   var b=e.target.closest('[data-jump]');
   if(b) jumpToSection(b.getAttribute('data-jump'));
+});
+document.getElementById('jumpBar').addEventListener('change',function(e){
+  if(e.target.id!=='jumpSelect'||!e.target.value) return;
+  jumpToSection(e.target.value);
+  e.target.selectedIndex=0;            // reset so the same pick works twice
 });
 
 /* ---------- search ---------- */
